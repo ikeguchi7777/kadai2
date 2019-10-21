@@ -1,22 +1,84 @@
 Mew-Two is gender-unknown
-Mew-Two is Pokemon
+Mew-Two is a Pokemon
 Mew-Two is a character of POKEMON
 Roy is male
 Roy is human
 Roy is a character of FIRE-EMBLEM
 Chrom is male
-Chrom is human
+Chrom is a human
 Chrom is a character of FIRE-EMBLEM
 Mr.GAME&Watch is gender-unknown
 Mr.GAME&Watch is species-unknown
 Mr.GAME&Watch is a character of GAME&WATCH
 MetaNight is gender-unknown
 MetaNight is species-unknown
-MetaNight is a character of Kirby's-Dream-Land
+MetaNight is a character of KIRBY'S-DREAM-LAND
 Pit is male
-Pit is angel
+Pit is an angel
 Pit is a character of KID-ICARUS
 Black-Pit is male
-Black-Pit is angel
+Black-Pit is an angel
 Black-Pit is a character of KID-ICARUS
-
+ZeroSuitSamus is female
+ZeroSuitSamus is a human
+ZeroSuitSamus is a character of METROID
+Wario is male
+Wario is a human
+Wario is a character of Wario-Ware
+Snake is male
+Snake is a human
+Snake is a character of METALGEAR
+Ike is male
+IKe is a human
+Ike is a character of FIRE-EMBLEM
+Pokemon-Trainer is male
+Pokemon-Trainer is a human
+Pokemon-Trainer is a character of POKEMON
+DiddyKong is male
+DiddyKong is a monkey
+DiddyKong is a character of DONKEYKONG
+Lucas is male
+Lucas is a human
+Lucas is a character of MOTHER
+Sonic is male
+Sonic is a Hedgehog
+Sonic is a character of SONIC
+Dedede is male
+Dedede is species-unknown
+Dedede is a character of KIRBY'S-DREAM-LAND
+Pikmin&Olimar is male
+Pikmin&Olimar is a human
+Pikmin&Olimar is a character of PIKMIN
+Lucario is gender-unknown
+Lucario is a pokemon
+Lucario is a character of POKEMON
+Robot is gender-unknown
+Robot is a species-unknown
+Robot is a character of FAMILY-COMPUTER-ROBOT
+ToonLink is male
+ToonLink is a human
+ToonLink is a character of ZELDA
+Wolf is male
+Wolf is a Wolf
+Wolf is a character of STARFOX
+Murabito is gender-unknown
+Murabito is a human
+Murabito is a character of ANIMAL-CROSSING
+RockMan is gender-unknown
+RockMan is a species-unknown
+RockMan is a character of ROCKMAN
+WiiFitTrainer is gender-unknown
+WiiFitTrainer is a human
+WiiFitTrainer is a character of WiiFIT
+Rosetta&Chiko is female
+Rosetta&Chikois a human
+Rosetta&Chikois a character of SUPERMARIO
+LittleMac is male
+LittleMac is a human
+LittleMac is a character of PUNCH-OUT
+Gekkouga is gender-unknown
+Gekkouga is Pokemon
+Gekkouga is a character of POKEMON
+Mii-Fighter is gender-unknown
+Mii-Fighter is human
+Mii-Fighter is a character of Mii
