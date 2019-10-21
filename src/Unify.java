@@ -44,6 +44,7 @@
   ***/
 
 import java.util.*;
+import java.io.*;
 
 class Unify {
     public static void main(String arg[]) {
@@ -51,6 +52,28 @@ class Unify {
             System.out.println("Usgae : % Unify [string1] [string2]");
         } else {
             System.out.println((new Unifier()).unify(arg[0], arg[1]));
+        }
+        LinkedList<String> strings = new LinkedList<>();
+        for (int i = 0; i < arg.length; i++) {
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(arg[i]), "UTF-8"));
+                String s=reader.readLine();
+                while(s!=null){
+                    strings.add(s);
+                    reader.readLine();
+                }
+                reader.close();
+            } catch (UnsupportedEncodingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
         }
     }
 }
