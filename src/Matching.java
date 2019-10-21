@@ -31,7 +31,7 @@
   
   ***/
 
-import java.lang.*;
+//import java.lang.*;
 import java.util.*;
 
 /**
@@ -42,8 +42,8 @@ class Matching {
 	public static void main(String arg[]) {
 		if (arg.length != 2) {
 			System.out.println("Usgae : % Matching [string1] [string2]");
-		}
-		System.out.println((new Matcher()).matching(arg[0], arg[1]));
+		} else
+			System.out.println((new Matcher()).matching(arg[0], arg[1]));
 	}
 }
 
