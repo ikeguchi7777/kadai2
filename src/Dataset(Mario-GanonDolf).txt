@@ -1,0 +1,78 @@
+Mario is male
+Mario is a　human
+Mario is a character of SUPERMARIO
+DonkeyKong is male
+DonkeyKong is a gorila
+DonkeyKong is a character of DONKEYKONG
+Link is male
+Link is a human
+Link is a character of ZELDA
+Samus is female
+Samus is a human
+Samus is a character of METROID
+DarkSamus is female
+DarkSamus is a human
+DarkSamus is a character of METROID
+Yoshi is gender-unknown
+Yoshi is a dinosaur
+Yoshi is a character of YOSHI
+Kirby is gender-unknown
+Kirby is unidentified
+Kirby is a character of Kirby's Dream Land
+Fox is male
+Fox is a fox
+Fox is a character of STARFOX
+Pikachu is gender-unknown
+Pikachu is a pokemon
+Pikachu is a character of POKEMON
+Luigi is male
+Luigi is a human
+Luigi is a character of SUPERMARIO
+Ness is male
+Ness is a human
+Ness is a character of MOTHER
+CaptainFalcon is male
+CaptainFalcon is a human
+CaptainFalcon is a character of F-ZERO
+Purin is gender-unknown
+Purin is a pokemon
+Purin is a character of POKEMON
+Peach is female
+Peach is a human
+Peach is a character of SUPERMARIO
+Daisy is female
+Daisy is a human
+Daisy is a character of SUPERMARIO
+Koopa is male
+Koopa is a Turtle
+Koopa is a character of SUPERMARIO
+IceClimber is gender-unknown
+IceClimber is a human
+IceClimber is a character of ICECLIMBER
+Sheik is gender-unknown
+Sheik is a human
+Sheik is a character of ZELDA
+Zelda is female
+Zelda is a human
+Zelda is a character of ZELDA
+Dr.Mario is male
+Dr.Mario is a human
+Dr.Mario is a character of SUPERMARIO
+Pichu is gender-unknown
+Pichu is a pokemon
+Pichu is a character of POKEMON
+Falco is male
+Falco is a bird
+Falco is a character of STARFOX
+Marth is male
+Marth is a human
+Marth is a character of FIRE EMBLEM
+Lucina is female
+Lucina is a human
+Lucina is a character of FIRE EMBLEM
+YoungLink is male
+YoungLink is a human
+YoungLink is a character of ZELDA
+GanonDolf is male
+GanonDolf is a human
+GanonDolf is a character of ZELDA
