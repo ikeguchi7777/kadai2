@@ -5,7 +5,7 @@ Link 男 人 ZELDA
 Samus 女 人 METROID
 Dark-Samus 女 人 METROID
 Yoshi 不明 恐竜 YOSHI
-Kirby 不明 不明 Kirby's-Dream-Land
+Kirby 不明 不明 KIRBY'S-DREAM-LAND
 Fox 男 キツネ STARFOX
 Pikachu 不明 ポケモン POKEMON
 Luigi 男 人 SUPERMARIO
@@ -29,34 +29,34 @@ Mew-Two 不明 ポケモン POKEMON
 Roy 男 人  FIRE-EMBLEM
 Chrom 男 人  FIRE-EMBLEM
 Mr.GAME&Watch 不明 不明 GAME&WATCH
-MetaNight 不明 不明 Kirby's-Dream-Land
+MetaNight 不明 不明 KIRBY'S-DREAM-LAND
 Pit 男 天使 Kid Icarus
-Black-Pit 男 天使 Kid Icarus
+Black-Pit 男 天使 KID-ICARUS
 ZeroSuitSamus 女 人 METROID
-Wario 男 人 Wario Ware
+Wario 男 人 Wario-Ware
 Snake 男 人 METALGEAR
 Ike 男 人  FIRE-EMBLEM
 Pokemon-Trainer 男 人 POKEMON
 DiddyKong 男 サル DONKEYKONG
 Lucas 男 人 MOTHER
 Sonic 男 ハリネズミ SONIC
-DEDEDE 男 不明 Kirby's-Dream-Land
+DEDEDE 男 不明 KIRBY'S-DREAM-LAND
 Pikmin&Olimar 男 人 ピクミン
 Lucario 不明 ポケモン POKEMON
 Robot 不明 ロボット FAMILY-COMPUTER-ROBOT
 ToonLink 男 人 ZELDA
 Wolf 男 オオカミ STARFOX
-Murabito 不明 人  AnimalCrossing
+Murabito 不明 人  ANIMAL-CROSSING
 RockMan 不明 不明 ROCKMAN
-WiiFitTrainer 不明 人 WiiFit
+WiiFitTrainer 不明 人 WiiFIT
 Rosetta&Chiko 女 人 SUPERMARIO
 LittleMac 男 人 PUNCH-OUT
 Gekkouga 不明 ポケモン POKEMON
 Mii-Fighter 不明 人 Mii
-Palutena 女 天使 Kid Icarus
-Pac-Man 不明 不明 Pac-Man
+Palutena 女 天使 KID-ICARUS
+Pac-Man 不明 不明 PAC-MAN
 Refle 男 人 FIRE-EMBLEM
-Shulk 男 人 Xenoblade
+Shulk 男 人 XENOBLADE
 KoopaJr. 男 カメ SUPERMARIO
 DuckHunt 不明 犬 DuckHunt
 Ryu 男 人 STREAT-FIGHTER
@@ -66,12 +66,12 @@ Kamui 不明 人 FIRE-EMBLEM
 Beyonetta 女 人 BEYONETTA
 Inkling 不明 イカ Splatoon
 Ridley 不明 不明 METROID
-Simon 男 人 Castlevania
-Richter 男 人 Castlevania
+Simon 男 人 CASTLEVANIA
+Richter 男 人 CASTLEVANIA
 King-K-Rool 男 ワニ DONKEYKNOG
-Shizue 女 犬  AnimalCrossing
+Shizue 女 犬  ANIMALCROSSING
 Gaogaen 不明 ポケモン POKEMON
 PackunFlower 不明 植物 SUPERMARIO
 Joker 男 人 PERSONA5
 Hero 不明 人 DragonQuest
-Banjo&Kazooie 男 くま、鳥 Banjo-Kazooie
+Banjo&Kazooie 男 くま、鳥 BANJO-KAZOOIE
