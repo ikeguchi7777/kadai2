@@ -1,0 +1,22 @@
+Mew-Two is gender-unknown
+Mew-Two is Pokemon
+Mew-Two is a character of POKEMON
+Roy is male
+Roy is human
+Roy is a character of FIRE-EMBLEM
+Chrom is male
+Chrom is human
+Chrom is a character of FIRE-EMBLEM
+Mr.GAME&Watch is gender-unknown
+Mr.GAME&Watch is species-unknown
+Mr.GAME&Watch is a character of GAME&WATCH
+MetaNight is gender-unknown
+MetaNight is species-unknown
+MetaNight is a character of Kirby's-Dream-Land
+Pit is male
+Pit is angel
+Pit is a character of KID-ICARUS
+Black-Pit is male
+Black-Pit is angel
+Black-Pit is a character of KID-ICARUS
+
