@@ -1,0 +1,67 @@
+Palutena is female
+Palutena is an angel
+Palutena is a character of KID-ICARUS
+Pac-Man is gender-unknown
+Pac-Man is specie-unknown
+Pac-Man is a character of PAC-MAN
+Refle is male
+Refle is a human
+Refle is a character of FIRE-EMBLEM
+Shulk is male
+Shulk is a human
+Shulk is a character of XENOBLADE
+KoopaJr. is male
+KoopaJr. is a turtle
+KoopaJr. is a character of SUPERMARIO
+DuckHunt is male
+DuckHunt is specie-unknown
+DuckHunt is a character of DUCKHUNT
+Ryu is male
+Ryu is a human
+Ryu is a character of STREET-FIGHTER
+Ken is male
+Ken is a human
+Ken is a character of STREET-FIGHTER
+Cloud is male
+Cloud is a human
+Cloud is a character of FINAL-FANTASY
+Kamui is gender-unknown
+Kamui is a human
+Kamui is a character of FIRE-EMBLEM
+Beyonetta is female
+Beyonetta is a human
+Beyonetta is a character of BEYONETTA
+Inkling is gender-unknown
+Inkling is a squid
+Inkling is a character of Splatoon
+Ridley is gender-unknown
+Ridley is specie-unknown
+Ridley is a character of METROID
+Simon is male
+Simon is a human
+Simon is a character of CASTLEVANIA
+Richter is male
+Richter is a human
+Richter is a character of CASTLEVANIA
+King-K-Rool is male
+King-K-Rool is an Alligator
+King-K-Rool is a character of DONKEYKONG
+Shizue is female
+Shizue is a dog
+Shizue is a character of ANIMALCROSSING
+Gaogaen is gender-unknown
+Gaogaen is a Pokemon
+Gaogaen is a character of POKEMON
+PackunFlower is gender-unknown
+PackunFlower is a plant
+PackunFlower is a character of SUPERMARIO
+Joker is male
+Joker is a human
+Joker is a character of PERSONA5
+Hero is gender-unknown
+Hero is a human
+Hero is a character of DRAGONQUEST
+Banjo&Kazooie is male
+Banjo&Kazooie is a bear
+Banjo&Kazooie is a bird
+Banjo&Kazooie is a character of BANJO-KAZOOIE
