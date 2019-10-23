@@ -48,18 +48,19 @@ import java.io.*;
 
 class Unify {
     public static void main(String arg[]) {
-        if (arg.length != 2) {
-            System.out.println("Usgae : % Unify [string1] [string2]");
-        } else {
-            System.out.println((new Unifier()).unify(arg[0], arg[1]));
-        }
-        LinkedList<String> strings = new LinkedList<>();
+        // if (arg.length != 2) {
+        // System.out.println("Usgae : % Unify [string1] [string2]");
+        // } else {
+        // System.out.println((new Unifier()).unify(arg[0], arg[1]));
+        // }
+        Unifier searcher = new Unifier();
+        Scanner stdin = new Scanner(System.in);
         for (int i = 0; i < arg.length; i++) {
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(arg[i]), "UTF-8"));
-                String s=reader.readLine();
-                while(s!=null){
-                    strings.add(s);
+                String s = reader.readLine();
+                while (s != null) {
+                    searcher.addLine(s);
                     reader.readLine();
                 }
                 reader.close();
@@ -75,6 +76,14 @@ class Unify {
             }
 
         }
+        int exit = 0;
+        while (exit != 1) {
+            System.out.println("Enter Search Pattern:");
+            searcher.search(stdin.nextLine());
+            System.out.println("Continue?(no.1):");
+            exit = stdin.nextInt();
+        }
+        stdin.close();
     }
 }
 
@@ -84,9 +93,21 @@ class Unifier {
     StringTokenizer st2;
     String buffer2[];
     HashMap<String, String> vars;
+    LinkedList<String> lines;
 
     Unifier() {
         vars = new HashMap<String, String>();
+        lines = new LinkedList<>();
+    }
+
+    public void search(String next) {
+        for (String s : lines) {
+            System.out.println(unify(s, next));
+        }
+    }
+
+    public void addLine(String s) {
+        lines.add(s);
     }
 
     public boolean unify(String string1, String string2, HashMap<String, String> bindings) {
