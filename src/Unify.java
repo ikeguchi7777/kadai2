@@ -47,21 +47,22 @@ import java.util.*;
 import java.io.*;
 
 class Unify {
+    static Scanner stdin = new Scanner(System.in);
+
     public static void main(String arg[]) {
-        // if (arg.length != 2) {
-        // System.out.println("Usgae : % Unify [string1] [string2]");
-        // } else {
-        // System.out.println((new Unifier()).unify(arg[0], arg[1]));
-        // }
+        /*
+         * if (arg.length != 2) {
+         * System.out.println("Usgae : % Unify [string1] [string2]"); } else {
+         * System.out.println((new Unifier()).unify(arg[0], arg[1])); }
+         */
         Unifier searcher = new Unifier();
-        Scanner stdin = new Scanner(System.in);
         for (int i = 0; i < arg.length; i++) {
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(arg[i]), "UTF-8"));
                 String s = reader.readLine();
                 while (s != null) {
                     searcher.addLine(s);
-                    reader.readLine();
+                    s = reader.readLine();
                 }
                 reader.close();
             } catch (UnsupportedEncodingException e) {
@@ -76,12 +77,13 @@ class Unify {
             }
 
         }
-        int exit = 0;
-        while (exit != 1) {
+        while (true) {
             System.out.println("Enter Search Pattern:");
-            searcher.search(stdin.nextLine());
-            System.out.println("Continue?(no.1):");
-            exit = stdin.nextInt();
+            String scan = stdin.nextLine();
+            if (scan.equals("exit"))
+                break;
+            if(!searcher.search(scan))
+                System.out.println("No Match.");
         }
         stdin.close();
     }
@@ -100,10 +102,12 @@ class Unifier {
         lines = new LinkedList<>();
     }
 
-    public void search(String next) {
+    public boolean search(String next) {
+        boolean match=false;
         for (String s : lines) {
-            System.out.println(unify(s, next));
+            match = match || unify(s, next);
         }
+        return match;
     }
 
     public void addLine(String s) {
@@ -116,12 +120,14 @@ class Unifier {
     }
 
     public boolean unify(String string1, String string2) {
-        System.out.println(string1);
-        System.out.println(string2);
+        // System.out.println(string1);
+        // System.out.println(string2);
 
         // 同じなら成功
-        if (string1.equals(string2))
+        if (string1.equals(string2)) {
+            System.out.println(string1);
             return true;
+        }
 
         // 各々トークンに分ける
         st1 = new StringTokenizer(string1);
@@ -146,6 +152,7 @@ class Unifier {
         }
 
         // 最後まで O.K. なら成功
+        System.out.println(string1);
         System.out.println(vars.toString());
         return true;
     }
