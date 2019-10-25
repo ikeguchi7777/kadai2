@@ -68,6 +68,14 @@ public class DataBase {
 		}
 		return (String[]) results.toArray();
 	}
+	
+	String[] searchByValue(String value) {
+		List<String> result = new ArrayList<>();
+		for (Data data : datas.values()) {
+			result.addAll(data.Search(value, keyMap));
+		}
+		return (String[]) result.toArray();
+	}
 
 	public static void main(String[] args) {
 		getDataBase().insert("Hanako studies philosophy");
@@ -133,7 +141,7 @@ class Data {
 		}
 	}
 
-	List<String> Search(List<Integer> keys,List<String> keyMap) {
+	public List<String> Search(List<Integer> keys,List<String> keyMap) {
 		List<String> results = new ArrayList<>();
 		for (Integer key : keys) {
 			if(records.containsKey(key)) {
@@ -144,6 +152,20 @@ class Data {
 		}
 		return results;
 	}
+	
+	
+	public List<String> Search(String value,List<String> keyMap){
+		List<String> result = new ArrayList<>();
+		for (int key : records.keySet()) {
+			List<String> valuelist = records.get(key);
+			for (String string : valuelist) {
+				if(new Matcher().matching(value, string))
+					result.add(name+" "+ keyMap.get(key)+" "+string);
+			}
+		}
+		return result;
+	}
+	
 
 	/**
 	 *
