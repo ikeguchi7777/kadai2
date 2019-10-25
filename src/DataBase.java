@@ -50,11 +50,19 @@ public class DataBase {
 		return false;
 	}
 
-	Data searchByName(String name) {
-		return datas.get(name);
+	DataBase searchByName(String name) {
+		DataBase dataBase = new DataBase();
+		Data d = datas.get(name);
+		if(d==null)
+			return null;
+		for (int key : d.records.keySet()) {
+			dataBase.keyMap.add(keyMap.get(key));
+		}
+		dataBase.datas.put(name, d);
+		return dataBase;
 	}
 
-	String[] searchByVarb(String varb) {
+	DataBase searchByVarb(String varb) {
 		List<Integer> keys = new ArrayList<>();
 		for (int i = 0; i < keyMap.size(); i++) {
 			if((new Matcher()).tokenMatching(varb, keyMap.get(i)))
@@ -62,19 +70,60 @@ public class DataBase {
 		}
 		if(keys.isEmpty())
 			return null;
-		List<String> results = new ArrayList<>();
+		/*List<String> results = new ArrayList<>();
 		for (Data data : datas.values()) {
 			results.addAll(data.Search(keys, keyMap));
 		}
-		return (String[]) results.toArray();
-	}
-	
-	String[] searchByValue(String value) {
-		List<String> result = new ArrayList<>();
-		for (Data data : datas.values()) {
-			result.addAll(data.Search(value, keyMap));
+		return (String[]) results.toArray();*/
+		DataBase dataBase = new DataBase();
+		for (Data d : datas.values()) {
+			if(d.Search(keys))
+			{
+				dataBase.datas.put(d.name, d);
+			}
 		}
-		return (String[]) result.toArray();
+		dataBase.keyMap = keyMap;
+		return dataBase;
+	}
+
+	DataBase searchByValue(String value) {
+		DataBase dataBase = new DataBase();
+		dataBase.keyMap = keyMap;
+		for (Data d : datas.values()) {
+			if(d.Search(value))
+				dataBase.datas.put(d.name, d);
+		}
+		if(dataBase.datas.size()==0)
+			return null;
+		return dataBase;
+	}
+
+	DataBase Search(String sentence) {
+		DataBase dataBase = this;
+		String[] values = SentenceAnalysis.Analysis(sentence);
+		if(!isVar(values[0]))
+			dataBase = dataBase.searchByName(values[0]);
+		if(!isContainVar(values[1]))
+			dataBase = dataBase.searchByVarb(values[1]);
+		if(!isContainVar(values[2]))
+			dataBase = dataBase.searchByValue(values[2]);
+		return dataBase;
+	}
+
+	boolean isVar(String s) {
+		return s.startsWith("?");
+	}
+
+	boolean isContainVar(String s) {
+		return s.contains("?");
+	}
+
+	public List<String> GetResult() {
+		List<String> list = new ArrayList<>();
+		for (Data d : datas.values()) {
+			list.addAll(d.GetAllSentence(keyMap));
+		}
+		return list;
 	}
 
 	public static void main(String[] args) {
@@ -152,8 +201,25 @@ class Data {
 		}
 		return results;
 	}
-	
-	
+
+	public boolean Search(List<Integer> keys) {
+		for (Integer integer : keys) {
+			if(records.containsKey(integer))
+				return true;
+		}
+		return false;
+	}
+
+	public boolean Search(String value) {
+		for (List<String> list : records.values()) {
+			for (String s : list) {
+				if(new Matcher().tokenMatching(s, value))
+					return true;
+			}
+		}
+		return false;
+	}
+
 	public List<String> Search(String value,List<String> keyMap){
 		List<String> result = new ArrayList<>();
 		for (int key : records.keySet()) {
@@ -165,7 +231,17 @@ class Data {
 		}
 		return result;
 	}
-	
+
+	public List<String> GetAllSentence(List<String> keyMap){
+		List<String> list = new ArrayList<>();
+		for (int key :records.keySet()) {
+			for (String string : records.get(key)) {
+				list.add(name +" "+keyMap.get(key)+" "+string);
+			}
+		}
+		return list;
+	}
+
 
 	/**
 	 *
