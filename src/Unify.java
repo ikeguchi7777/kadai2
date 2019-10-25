@@ -62,6 +62,7 @@ class Unify {
                 String s = reader.readLine();
                 while (s != null) {
                     searcher.addLine(s);
+                    DataBase.getDataBase().insert(s);
                     s = reader.readLine();
                 }
                 reader.close();
@@ -84,6 +85,12 @@ class Unify {
                 break;
             if(!searcher.search(scan))
                 System.out.println("No Match.");
+            Data data = DataBase.getDataBase().searchByName("Mario");
+            for (List<String> list : data.records.values()) {
+                for (String string : list) {
+                    System.out.println(string);
+                }
+            }
         }
         stdin.close();
     }
@@ -105,7 +112,8 @@ class Unifier {
     public boolean search(String next) {
         boolean match=false;
         for (String s : lines) {
-            match = match || unify(s, next);
+            vars = new HashMap<String, String>();
+            match = unify(s, next) || match;
         }
         return match;
     }
