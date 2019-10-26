@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -13,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JViewport;
 import javax.swing.SpringLayout;
 import javax.swing.border.EtchedBorder;
 import javax.swing.filechooser.FileFilter;
@@ -104,7 +104,7 @@ class AddPanel extends JPanel {
 				s = reader.readLine();
 			}
 			reader.close();
-			log.addLog(count+"個のデータが追加されました。");
+			log.addLog(count + "個のデータが追加されました。");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -121,7 +121,8 @@ class AddPanel extends JPanel {
 
 class SearchPanel extends JPanel {
 	TextLog log;
-	DataBase dataBase=null;
+	DataBase dataBase = null;
+
 	public SearchPanel() {
 		SpringLayout layout = new SpringLayout();
 		setLayout(layout);
@@ -144,24 +145,24 @@ class SearchPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String str = text.getText();
-				if(dataBase==null)
+				if (dataBase == null)
 					dataBase = DataBase.getDataBase();
-				DataBase t=dataBase.Search(str);
-				if(t==null) {
+				DataBase t = dataBase.Search(str);
+				if (t == null) {
 					log.addLog("検索失敗");
 					return;
 				}
-				dataBase=t;
+				dataBase = t;
 				for (String s : dataBase.GetResult()) {
 					log.addLog(s);
 				}
 			}
 		};
 		ActionListener listener2 = new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dataBase=DataBase.getDataBase();
+				dataBase = DataBase.getDataBase();
 				log.addLog("検索履歴がクリアされました。");
 			}
 		};
@@ -174,21 +175,50 @@ class SearchPanel extends JPanel {
 }
 
 class RemovePanel extends JPanel {
-	public RemovePanel() {
-		JTextField text = new JTextField("文を入力してください。", 50);
-		JButton button = new JButton("remove");
+	TextLog log;
 
+	public RemovePanel() {
+		SpringLayout layout = new SpringLayout();
+		setLayout(layout);
+		JLabel label = new JLabel("削除");
+		layout.putConstraint(SpringLayout.NORTH, label, 5, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, label, 0, SpringLayout.HORIZONTAL_CENTER, this);
+		add(label);
+		JPanel panel = new JPanel();
+		JTextField text = new JTextField("文を入力してください。", 50);
+		JButton button = new JButton("削除");
+		panel.add(text);
+		panel.add(button);
+		layout.putConstraint(SpringLayout.NORTH, panel, 5, SpringLayout.SOUTH, label);
+		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, panel, 0, SpringLayout.HORIZONTAL_CENTER, this);
+		add(panel);
+		log = new TextLog(20, 70);
+		layout.putConstraint(SpringLayout.NORTH, log, 5, SpringLayout.SOUTH, panel);
+		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, log, 0, SpringLayout.HORIZONTAL_CENTER, this);
+		add(log);
 		ActionListener listener = new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String str = text.getText();
-				System.out.println(str);
+				if (str.contains("?")) {
+					DataBase dataBase = DataBase.getDataBase().Search(str);
+					for (String s : dataBase.GetResult()) {
+						if (DataBase.getDataBase().remove(s))
+							log.addLog(s + "を削除しました。");
+
+					}
+
+				}
+				else if (DataBase.getDataBase().remove(str))
+					log.addLog(str + "を削除しました。");
+				else {
+					log.addLog(str + "は見つかりませんでした。");
+				}
 
 			}
 		};
 		button.addActionListener(listener);
-		add(text, BorderLayout.CENTER);
-		add(button, BorderLayout.PAGE_END);
+
 	}
 }
 
@@ -231,6 +261,7 @@ class TxtFilter extends FileFilter {
 
 class TextLog extends JScrollPane {
 	JTextArea area;
+	JViewport viewport;
 
 	public TextLog(int rows, int columns) {
 		super();
@@ -239,9 +270,10 @@ class TextLog extends JScrollPane {
 		area.setEditable(false);
 		area.setBorder(border);
 		setViewportView(area);
+		viewport = getViewport();
 	}
 
 	public void addLog(String txt) {
-		area.insert(txt + "\n", 0);
+		area.append(txt + "\n");
 	}
 }
