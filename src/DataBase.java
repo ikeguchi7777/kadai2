@@ -1,14 +1,17 @@
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 public class DataBase {
 	private static DataBase instance = new DataBase();
 	Map<String, Data> datas;
-	List<String> keyMap;
-	int id = 0;
+	Map<String,Integer> keyMap;
+	static int id = 0;
 
 	static DataBase getDataBase() {
 		return instance;
@@ -16,17 +19,22 @@ public class DataBase {
 
 	public DataBase() {
 		datas = new HashMap<>();
-		keyMap = new ArrayList<>();
+		keyMap = new HashMap<>();
 	}
 
-	void insert(String sentence) {
-		String[] values = SentenceAnalysis.Analysis(sentence);
+	boolean insert(String sentence) {
+		String[] values = null;
+		try {
+			values = SentenceAnalysis.Analysis(sentence);
+		} catch (Exception e) {
+			return false;
+		}
 		int key = -1;
-		if (!keyMap.contains(values[1])) {
-			keyMap.add(values[1]);
+		if (!keyMap.containsKey(values[1])) {
+			keyMap.put(values[1],id++);
 			key = keyMap.size() - 1;
 		} else
-			key = keyMap.indexOf(values[1]);
+			key = keyMap.get(values[1]);
 		if (datas.containsKey(values[0])) {
 			datas.get(values[0]).add(key, values[2]);
 		} else {
@@ -34,11 +42,18 @@ public class DataBase {
 			data.add(key, values[2]);
 			datas.put(values[0], data);
 		}
+		return true;
 	}
 
 	boolean remove(String sentence) {
-		String[] values = SentenceAnalysis.Analysis(sentence);
-		int key = keyMap.indexOf(values[1]);
+		String[] values = null;
+		try {
+			values = SentenceAnalysis.Analysis(sentence);
+		} catch (Exception e) {
+			return false;
+		}
+
+		int key = keyMap.get(values[1]);
 		if (key != -1) {
 			Data data = datas.get(values[0]);
 			if (data.remove(key, values[2])) {
@@ -53,36 +68,32 @@ public class DataBase {
 	DataBase searchByName(String name) {
 		DataBase dataBase = new DataBase();
 		Data d = datas.get(name);
-		if(d==null)
+		if (d == null)
 			return null;
-		for (int key : d.records.keySet()) {
-			dataBase.keyMap.add(keyMap.get(key));
+		Set<Integer> keyset =d.records.keySet();
+		for (String s : keyMap.keySet()) {
+			if(keyset.contains(keyMap.get(s)))
+				dataBase.keyMap.put(s, keyMap.get(s));
 		}
 		dataBase.datas.put(name, d);
 		return dataBase;
 	}
 
 	DataBase searchByVarb(String varb) {
-		List<Integer> keys = new ArrayList<>();
-		for (int i = 0; i < keyMap.size(); i++) {
-			if((new Matcher()).tokenMatching(varb, keyMap.get(i)))
-				keys.add(i);
-		}
-		if(keys.isEmpty())
-			return null;
-		/*List<String> results = new ArrayList<>();
-		for (Data data : datas.values()) {
-			results.addAll(data.Search(keys, keyMap));
-		}
-		return (String[]) results.toArray();*/
 		DataBase dataBase = new DataBase();
+		for (String key : keyMap.keySet()) {
+			if ((new Matcher()).tokenMatching(varb, key))
+				dataBase.keyMap.put(key, keyMap.get(key));
+		}
+		if (dataBase.keyMap.isEmpty())
+			return null;
 		for (Data d : datas.values()) {
-			if(d.Search(keys))
-			{
+			if (d.Search(dataBase.keyMap.values())) {
 				dataBase.datas.put(d.name, d);
 			}
 		}
-		dataBase.keyMap = keyMap;
+		if(dataBase.datas.isEmpty())
+			return null;
 		return dataBase;
 	}
 
@@ -90,22 +101,28 @@ public class DataBase {
 		DataBase dataBase = new DataBase();
 		dataBase.keyMap = keyMap;
 		for (Data d : datas.values()) {
-			if(d.Search(value))
+			if (d.Search(value)) {
 				dataBase.datas.put(d.name, d);
+			}
 		}
-		if(dataBase.datas.size()==0)
+		if (dataBase.datas.isEmpty())
 			return null;
 		return dataBase;
 	}
 
 	DataBase Search(String sentence) {
 		DataBase dataBase = this;
-		String[] values = SentenceAnalysis.Analysis(sentence);
-		if(!isVar(values[0]))
+		String[] values = null;
+		try {
+			values = SentenceAnalysis.Analysis(sentence);
+		} catch (Exception e) {
+			return null;
+		}
+		if (!isVar(values[0]))
 			dataBase = dataBase.searchByName(values[0]);
-		if(!isContainVar(values[1]))
+		if (!isContainVar(values[1]))
 			dataBase = dataBase.searchByVarb(values[1]);
-		if(!isContainVar(values[2]))
+		if (!isContainVar(values[2]))
 			dataBase = dataBase.searchByValue(values[2]);
 		return dataBase;
 	}
@@ -134,7 +151,7 @@ public class DataBase {
 class SentenceAnalysis {
 	private static String[] preposition = { "to", "for", "from", "up", "down", "in", "on", "at", "of", "by" };
 
-	static String[] Analysis(String sentence) {
+	static String[] Analysis(String sentence) throws NoSuchElementException {
 		String[] elements = new String[3];
 		StringTokenizer tokenizer = new StringTokenizer(sentence);
 		elements[0] = tokenizer.nextToken();
@@ -164,7 +181,7 @@ class SentenceAnalysis {
 
 	static boolean PrepositionCheck(String s) {
 		for (String pre : preposition) {
-			if(pre.equals(s))
+			if (pre.equals(s))
 				return true;
 		}
 		return false;
@@ -190,21 +207,21 @@ class Data {
 		}
 	}
 
-	public List<String> Search(List<Integer> keys,List<String> keyMap) {
+	public List<String> Search(List<Integer> keys, List<String> keyMap) {
 		List<String> results = new ArrayList<>();
 		for (Integer key : keys) {
-			if(records.containsKey(key)) {
+			if (records.containsKey(key)) {
 				for (String string : records.get(key)) {
-					results.add(name+" "+keyMap.get(key)+" "+string);
+					results.add(name + " " + keyMap.get(key) + " " + string);
 				}
 			}
 		}
 		return results;
 	}
 
-	public boolean Search(List<Integer> keys) {
-		for (Integer integer : keys) {
-			if(records.containsKey(integer))
+	public boolean Search(Collection<Integer> collection) {
+		for (Integer integer : collection) {
+			if (records.containsKey(integer))
 				return true;
 		}
 		return false;
@@ -213,35 +230,38 @@ class Data {
 	public boolean Search(String value) {
 		for (List<String> list : records.values()) {
 			for (String s : list) {
-				if(new Matcher().tokenMatching(s, value))
+				if (new Matcher().tokenMatching(s, value))
 					return true;
 			}
 		}
 		return false;
 	}
 
-	public List<String> Search(String value,List<String> keyMap){
+	public List<String> Search(String value, List<String> keyMap) {
 		List<String> result = new ArrayList<>();
 		for (int key : records.keySet()) {
 			List<String> valuelist = records.get(key);
 			for (String string : valuelist) {
-				if(new Matcher().matching(value, string))
-					result.add(name+" "+ keyMap.get(key)+" "+string);
+				if (new Matcher().matching(value, string))
+					result.add(name + " " + keyMap.get(key) + " " + string);
 			}
 		}
 		return result;
 	}
 
-	public List<String> GetAllSentence(List<String> keyMap){
+	public List<String> GetAllSentence(Map<String,Integer> keyMap) {
 		List<String> list = new ArrayList<>();
-		for (int key :records.keySet()) {
-			for (String string : records.get(key)) {
-				list.add(name +" "+keyMap.get(key)+" "+string);
+		Set<Integer> sets = records.keySet();
+		for (String s : keyMap.keySet()) {
+			Integer t =keyMap.get(s);
+			if(sets.contains(t)) {
+				for (String string : records.get(t)) {
+					list.add(name + " " + s + " " + string);
+				}
 			}
 		}
 		return list;
 	}
-
 
 	/**
 	 *

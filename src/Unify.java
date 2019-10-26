@@ -4,7 +4,7 @@
 
 
 
-  変数:前に？をつける．  
+  変数:前に？をつける．
 
   Examle:
   % Unify "Takayuki" "Takayuki"
@@ -43,8 +43,18 @@
 
   ***/
 
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.StringTokenizer;
 
 class Unify {
     static DataBase[] results;
