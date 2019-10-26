@@ -47,15 +47,25 @@ import java.util.*;
 import java.io.*;
 
 class Unify {
-    static Scanner stdin = new Scanner(System.in);
+    static DataBase[] results;
+    static String[] terms;
+    public Unify(String next){
+        terms = next.split(";");
+        results = new DataBase[terms.length];
+        for(int i=0;i<terms.length;i++){
+            results[i] = DataBase.getDataBase().Search(terms[i]);
+        }
+    }
 
     public static void main(String arg[]) {
+        // For CUI Test
         /*
          * if (arg.length != 2) {
          * System.out.println("Usgae : % Unify [string1] [string2]"); } else {
          * System.out.println((new Unifier()).unify(arg[0], arg[1])); }
          */
         //Unifier searcher = new Unifier();
+        Scanner stdin = new Scanner(System.in);
         for (int i = 0; i < arg.length; i++) {
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(arg[i]), "UTF-8"));
@@ -106,6 +116,8 @@ class Unifier {
     String buffer2[];
     HashMap<String, String> vars;
     LinkedList<String> lines;
+    private static DataBase[] results;
+    private static String[] terms;
 
     Unifier() {
         vars = new HashMap<String, String>();
@@ -118,17 +130,45 @@ class Unifier {
             addLine(string);
         }
     }
+    Unifier(List<String> list,HashMap<String,String> vars){
+        this(list);
+        this.vars = new HashMap<String, String>(vars);
+    }
+    
+    public static void setByTerms(String str){
+        String[] terms = str.split(";");
+        Unifier.terms = terms;
+        DataBase[] results = new DataBase[terms.length];
+        for (int i = 0; i < results.length; i++) {
+            results[i] = DataBase.getDataBase().Search(terms[i]);
+        }
+        Unifier.results = results;
+    }
 
     public boolean search(String next) {
         boolean match = false;
-        String[] term = next.split(";", 2);
-        for (String s : lines) {
+        search(new HashMap<>(),0);
+        for (String string : lines) {
             vars = new HashMap<String, String>();
             for (String terms : next.split(";")) {
-                if (unify(s, terms,vars))
+                if (unify(string, terms))
                     match = true;
             }
         }
+        return match;
+    }
+
+    boolean search(HashMap<String,String> vars,int layer){
+        boolean match =false;
+        if(layer<terms.length){
+            Unifier unifier = new Unifier(Unifier.results[layer].GetResult(), vars);
+            for (String string : unifier.lines) {
+                if(unifier.unify(string,terms[layer])){
+                    search(unifier.vars, layer+1);
+                }
+            }
+        }else
+            return true;
         return match;
     }
 
