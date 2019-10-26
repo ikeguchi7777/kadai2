@@ -55,9 +55,12 @@ public class DataBase {
 		Data d = datas.get(name);
 		if(d==null)
 			return null;
+		Map<Integer, List<String>> records = new HashMap<Integer, List<String>>();
 		for (int key : d.records.keySet()) {
 			dataBase.keyMap.add(keyMap.get(key));
+			records.put(keyMap.size()-1, d.records.get(key));
 		}
+		d.records = records;
 		dataBase.datas.put(name, d);
 		return dataBase;
 	}

@@ -64,14 +64,16 @@ class Unify {
          * System.out.println("Usgae : % Unify [string1] [string2]"); } else {
          * System.out.println((new Unifier()).unify(arg[0], arg[1])); }
          */
-        Unifier searcher = new Unifier();
+        //Unifier searcher = new Unifier();
         for (int i = 0; i < arg.length; i++) {
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(arg[i]), "UTF-8"));
                 String s = reader.readLine();
                 while (s != null) {
-                    searcher.addLine(s);
-                    DataBase.getDataBase().insert(s);
+                    if (!s.equals("")) {
+                        //searcher.addLine(s);
+                        DataBase.getDataBase().insert(s);
+                    }
                     s = reader.readLine();
                 }
                 reader.close();
@@ -92,7 +94,14 @@ class Unify {
             String scan = stdin.nextLine();
             if (scan.equals("exit"))
                 break;
-            if(!searcher.search(scan))
+            //if (!searcher.search(scan))
+                //System.out.println("No Match.");
+            DataBase dbsearch = DataBase.getDataBase();
+            for (String string : scan.split(";")) {
+                dbsearch = dbsearch.Search(string);
+            }
+            Unifier unifier = new Unifier(dbsearch.GetResult());
+            if (!unifier.search(scan))
                 System.out.println("No Match.");
         }
         stdin.close();
@@ -112,11 +121,22 @@ class Unifier {
         lines = new LinkedList<>();
     }
 
+    Unifier(List<String> list){
+        this();
+        for (String string : list) {
+            addLine(string);
+        }
+    }
+
     public boolean search(String next) {
-        boolean match=false;
+        boolean match = false;
+        String[] term = next.split(";", 2);
         for (String s : lines) {
             vars = new HashMap<String, String>();
-            match = unify(s, next) || match;
+            for (String terms : next.split(";")) {
+                if (unify(s, terms,vars))
+                    match = true;
+            }
         }
         return match;
     }
