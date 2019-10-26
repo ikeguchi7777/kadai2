@@ -166,16 +166,16 @@ class Unifier {
     }
 
     public boolean search(String str) {
-        boolean match = false;
         cleanVarSets();
         setByTerms(str);
-        search(new HashMap<>(), 0);
-        return match;
+        return search(new HashMap<>(), 0);
     }
 
     boolean search(HashMap<String, String> vars, int layer) {
         boolean match = false;
         if (layer < terms.length) {
+            if(Unifier.results[layer]==null)
+                return false;
             Unifier unifier = new Unifier(Unifier.results[layer].GetResult());
             for (String string : unifier.lines) {
                 unifier.setVars(vars);

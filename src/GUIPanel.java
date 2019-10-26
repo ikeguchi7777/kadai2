@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -147,13 +148,13 @@ class SearchPanel extends JPanel {
 				String str = text.getText();
 				if (dataBase == null)
 					dataBase = DataBase.getDataBase();
-				DataBase t = dataBase.Search(str);
-				if (t == null) {
+				(new Unifier()).search(str);
+				ArrayList<String> varSets = Unifier.getVarSets();
+				if (varSets.isEmpty()) {
 					log.addLog("検索失敗");
 					return;
 				}
-				dataBase = t;
-				for (String s : dataBase.GetResult()) {
+				for (String s : Unifier.getVarSets()){
 					log.addLog(s);
 				}
 			}
