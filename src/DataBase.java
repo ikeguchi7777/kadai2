@@ -1,15 +1,17 @@
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 public class DataBase {
 	private static DataBase instance = new DataBase();
 	Map<String, Data> datas;
-	List<String> keyMap;
-	int id = 0;
+	Map<String,Integer> keyMap;
+	static int id = 0;
 
 	static DataBase getDataBase() {
 		return instance;
@@ -17,7 +19,7 @@ public class DataBase {
 
 	public DataBase() {
 		datas = new HashMap<>();
-		keyMap = new ArrayList<>();
+		keyMap = new HashMap<>();
 	}
 
 	boolean insert(String sentence) {
@@ -28,11 +30,11 @@ public class DataBase {
 			return false;
 		}
 		int key = -1;
-		if (!keyMap.contains(values[1])) {
-			keyMap.add(values[1]);
+		if (!keyMap.containsKey(values[1])) {
+			keyMap.put(values[1],id++);
 			key = keyMap.size() - 1;
 		} else
-			key = keyMap.indexOf(values[1]);
+			key = keyMap.get(values[1]);
 		if (datas.containsKey(values[0])) {
 			datas.get(values[0]).add(key, values[2]);
 		} else {
@@ -51,7 +53,7 @@ public class DataBase {
 			return false;
 		}
 
-		int key = keyMap.indexOf(values[1]);
+		int key = keyMap.get(values[1]);
 		if (key != -1) {
 			Data data = datas.get(values[0]);
 			if (data.remove(key, values[2])) {
@@ -68,36 +70,30 @@ public class DataBase {
 		Data d = datas.get(name);
 		if (d == null)
 			return null;
-		Map<Integer, List<String>> records = new HashMap<Integer, List<String>>();
-		for (int key : d.records.keySet()) {
-			dataBase.keyMap.add(keyMap.get(key));
-			records.put(dataBase.keyMap.size() - 1, d.records.get(key));
+		Set<Integer> keyset =d.records.keySet();
+		for (String s : keyMap.keySet()) {
+			if(keyset.contains(keyMap.get(s)))
+				dataBase.keyMap.put(s, keyMap.get(s));
 		}
-		d.records = records;
 		dataBase.datas.put(name, d);
 		return dataBase;
 	}
 
 	DataBase searchByVarb(String varb) {
-		List<Integer> keys = new ArrayList<>();
-		for (int i = 0; i < keyMap.size(); i++) {
-			if ((new Matcher()).tokenMatching(varb, keyMap.get(i)))
-				keys.add(i);
-		}
-		if (keys.isEmpty())
-			return null;
-		/*List<String> results = new ArrayList<>();
-		for (Data data : datas.values()) {
-			results.addAll(data.Search(keys, keyMap));
-		}
-		return (String[]) results.toArray();*/
 		DataBase dataBase = new DataBase();
+		for (String key : keyMap.keySet()) {
+			if ((new Matcher()).tokenMatching(varb, key))
+				dataBase.keyMap.put(key, keyMap.get(key));
+		}
+		if (dataBase.keyMap.isEmpty())
+			return null;
 		for (Data d : datas.values()) {
-			if (d.Search(keys)) {
+			if (d.Search(dataBase.keyMap.values())) {
 				dataBase.datas.put(d.name, d);
 			}
 		}
-		dataBase.keyMap = keyMap;
+		if(dataBase.datas.isEmpty())
+			return null;
 		return dataBase;
 	}
 
@@ -105,10 +101,11 @@ public class DataBase {
 		DataBase dataBase = new DataBase();
 		dataBase.keyMap = keyMap;
 		for (Data d : datas.values()) {
-			if (d.Search(value))
+			if (d.Search(value)) {
 				dataBase.datas.put(d.name, d);
+			}
 		}
-		if (dataBase.datas.size() == 0)
+		if (dataBase.datas.isEmpty())
 			return null;
 		return dataBase;
 	}
@@ -222,8 +219,8 @@ class Data {
 		return results;
 	}
 
-	public boolean Search(List<Integer> keys) {
-		for (Integer integer : keys) {
+	public boolean Search(Collection<Integer> collection) {
+		for (Integer integer : collection) {
 			if (records.containsKey(integer))
 				return true;
 		}
@@ -252,11 +249,15 @@ class Data {
 		return result;
 	}
 
-	public List<String> GetAllSentence(List<String> keyMap) {
+	public List<String> GetAllSentence(Map<String,Integer> keyMap) {
 		List<String> list = new ArrayList<>();
-		for (int key : records.keySet()) {
-			for (String string : records.get(key)) {
-				list.add(name + " " + keyMap.get(key) + " " + string);
+		Set<Integer> sets = records.keySet();
+		for (String s : keyMap.keySet()) {
+			Integer t =keyMap.get(s);
+			if(sets.contains(t)) {
+				for (String string : records.get(t)) {
+					list.add(name + " " + s + " " + string);
+				}
 			}
 		}
 		return list;
