@@ -49,6 +49,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -59,10 +60,11 @@ import java.util.StringTokenizer;
 class Unify {
     static DataBase[] results;
     static String[] terms;
-    public Unify(String next){
+
+    public Unify(String next) {
         terms = next.split(";");
         results = new DataBase[terms.length];
-        for(int i=0;i<terms.length;i++){
+        for (int i = 0; i < terms.length; i++) {
             results[i] = DataBase.getDataBase().Search(terms[i]);
         }
     }
@@ -74,7 +76,7 @@ class Unify {
          * System.out.println("Usgae : % Unify [string1] [string2]"); } else {
          * System.out.println((new Unifier()).unify(arg[0], arg[1])); }
          */
-        //Unifier searcher = new Unifier();
+        // Unifier searcher = new Unifier();
         Scanner stdin = new Scanner(System.in);
         for (int i = 0; i < arg.length; i++) {
             try {
@@ -82,7 +84,7 @@ class Unify {
                 String s = reader.readLine();
                 while (s != null) {
                     if (!s.equals("")) {
-                        //searcher.addLine(s);
+                        // searcher.addLine(s);
                         DataBase.getDataBase().insert(s);
                     }
                     s = reader.readLine();
@@ -105,15 +107,10 @@ class Unify {
             String scan = stdin.nextLine();
             if (scan.equals("exit"))
                 break;
-            //if (!searcher.search(scan))
-                //System.out.println("No Match.");
-            DataBase dbsearch = DataBase.getDataBase();
-            for (String string : scan.split(";")) {
-                dbsearch = dbsearch.Search(string);
+            (new Unifier()).search(scan);
+            for (String string : Unifier.getVarSets()) {
+                System.out.println(string);
             }
-            Unifier unifier = new Unifier(dbsearch.GetResult());
-            if (!unifier.search(scan))
-                System.out.println("No Match.");
         }
         stdin.close();
     }
@@ -128,24 +125,26 @@ class Unifier {
     LinkedList<String> lines;
     private static DataBase[] results;
     private static String[] terms;
+    private static List<String> varSets;
 
     Unifier() {
         vars = new HashMap<String, String>();
         lines = new LinkedList<>();
     }
 
-    Unifier(List<String> list){
+    Unifier(List<String> list) {
         this();
         for (String string : list) {
             addLine(string);
         }
     }
-    Unifier(List<String> list,HashMap<String,String> vars){
+
+    Unifier(List<String> list, HashMap<String, String> vars) {
         this(list);
         this.vars = new HashMap<String, String>(vars);
     }
-    
-    public static void setByTerms(String str){
+
+    public static void setByTerms(String str) {
         String[] terms = str.split(";");
         Unifier.terms = terms;
         DataBase[] results = new DataBase[terms.length];
@@ -155,31 +154,48 @@ class Unifier {
         Unifier.results = results;
     }
 
-    public boolean search(String next) {
+    public static ArrayList<String> getVarSets(){
+        return new ArrayList<String>(Unifier.varSets);
+    }
+    private static void cleanVarSets(){
+        Unifier.varSets = new ArrayList<String>();
+    }
+
+    private static void addVarSets(String string){
+        Unifier.varSets.add(string);
+    }
+
+    public boolean search(String str) {
         boolean match = false;
-        search(new HashMap<>(),0);
-        for (String string : lines) {
-            vars = new HashMap<String, String>();
-            for (String terms : next.split(";")) {
-                if (unify(string, terms))
-                    match = true;
+        cleanVarSets();
+        setByTerms(str);
+        search(new HashMap<>(), 0);
+        return match;
+    }
+
+    boolean search(HashMap<String, String> vars, int layer) {
+        boolean match = false;
+        if (layer < terms.length) {
+            Unifier unifier = new Unifier(Unifier.results[layer].GetResult());
+            for (String string : unifier.lines) {
+                unifier.setVars(vars);
+                if (unifier.unify(string, terms[layer])) {
+                    match = search(unifier.vars, layer + 1) || match;
+                }
             }
+        } else {
+            String varset = vars.toString();
+            if(varset.equals("{}"))
+                addVarSets("true.");
+            else
+                addVarSets(varset);
+            return true;
         }
         return match;
     }
 
-    boolean search(HashMap<String,String> vars,int layer){
-        boolean match =false;
-        if(layer<terms.length){
-            Unifier unifier = new Unifier(Unifier.results[layer].GetResult(), vars);
-            for (String string : unifier.lines) {
-                if(unifier.unify(string,terms[layer])){
-                    search(unifier.vars, layer+1);
-                }
-            }
-        }else
-            return true;
-        return match;
+    private void setVars(HashMap<String, String> vars2) {
+        vars = new HashMap<>(vars2);
     }
 
     public void addLine(String s) {
@@ -197,7 +213,7 @@ class Unifier {
 
         // 同じなら成功
         if (string1.equals(string2)) {
-            System.out.println(string1);
+            //System.out.println(string1);
             return true;
         }
 
@@ -224,8 +240,8 @@ class Unifier {
         }
 
         // 最後まで O.K. なら成功
-        System.out.println(string1);
-        System.out.println(vars.toString());
+        //System.out.println(string1);
+        //System.out.println(vars.toString());
         return true;
     }
 
