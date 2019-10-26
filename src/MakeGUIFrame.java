@@ -51,15 +51,15 @@ public class MakeGUIFrame {
 		};
 
 	    /* カード移動用ボタン */
-	    JButton addButton = new JButton("追加");
+	    JButton addButton = new JButton("追加に移動");
 	    addButton.addActionListener(listener);
 	    addButton.setActionCommand("Add");
 
-	    JButton searchButton = new JButton("検索");
+	    JButton searchButton = new JButton("検索に移動");
 	    searchButton.addActionListener(listener);
 	    searchButton.setActionCommand("Search");
 
-	    JButton removeButton = new JButton("削除");
+	    JButton removeButton = new JButton("削除に移動");
 	    removeButton.addActionListener(listener);
 	    removeButton.setActionCommand("Remove");
 
@@ -83,3 +83,4 @@ public class MakeGUIFrame {
 		MakeMatchingGUI();
 	}
 }
+
