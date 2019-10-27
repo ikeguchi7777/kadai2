@@ -149,8 +149,8 @@ WiiFitTrainer is gender-unknown
 WiiFitTrainer is a human
 WiiFitTrainer is a character of WiiFIT
 Rosetta&Chiko is female
-Rosetta&Chikois a human
-Rosetta&Chikois a character of SUPERMARIO
+Rosetta&Chiko is a human
+Rosetta&Chiko is a character of SUPERMARIO
 LittleMac is male
 LittleMac is a human
 LittleMac is a character of PUNCH-OUT

@@ -133,10 +133,8 @@ class SearchPanel extends JPanel {
 		JPanel panel = new JPanel();
 		JTextField text = new JTextField("文を入力してください。", 50);
 		JButton button = new JButton("検索");
-		JButton button1 = new JButton("クリア");
 		panel.add(text);
 		panel.add(button);
-		panel.add(button1);
 		layout.putConstraint(SpringLayout.NORTH, panel, 5, SpringLayout.SOUTH, label);
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, panel, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		log = new TextLog(20, 70);
@@ -146,8 +144,6 @@ class SearchPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String str = text.getText();
-				if (dataBase == null)
-					dataBase = DataBase.getDataBase();
 				(new Unifier()).search(str);
 				ArrayList<String> varSets = Unifier.getVarSets();
 				if (varSets.isEmpty()) {
@@ -159,16 +155,7 @@ class SearchPanel extends JPanel {
 				}
 			}
 		};
-		ActionListener listener2 = new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dataBase = DataBase.getDataBase();
-				log.addLog("検索履歴がクリアされました。");
-			}
-		};
 		button.addActionListener(listener);
-		button1.addActionListener(listener2);
 		add(label);
 		add(panel);
 		add(log);
@@ -202,6 +189,8 @@ class RemovePanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				String str = text.getText();
 				if (str.contains("?")) {
+					(new Unifier()).search(str);
+					
 					DataBase dataBase = DataBase.getDataBase().Search(str);
 					for (String s : dataBase.GetResult()) {
 						if (DataBase.getDataBase().remove(s))

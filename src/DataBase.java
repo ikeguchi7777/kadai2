@@ -24,6 +24,8 @@ public class DataBase {
 
 	boolean insert(String sentence) {
 		String[] values = null;
+		if(sentence.contains("?"))
+			return false;
 		try {
 			values = SentenceAnalysis.Analysis(sentence);
 		} catch (Exception e) {
@@ -82,7 +84,7 @@ public class DataBase {
 	DataBase searchByVarb(String varb) {
 		DataBase dataBase = new DataBase();
 		for (String key : keyMap.keySet()) {
-			if ((new Matcher()).tokenMatching(varb, key))
+			if (varb==key)
 				dataBase.keyMap.put(key, keyMap.get(key));
 		}
 		if (dataBase.keyMap.isEmpty())
@@ -173,9 +175,6 @@ class SentenceAnalysis {
 					break;
 			}
 		}
-		System.out.println("name:" + elements[0]);
-		System.out.println("varb:" + elements[1]);
-		System.out.println("value:" + elements[2]);
 		return elements;
 	}
 
@@ -230,7 +229,7 @@ class Data {
 	public boolean Search(String value) {
 		for (List<String> list : records.values()) {
 			for (String s : list) {
-				if (new Matcher().tokenMatching(s, value))
+				if (s==value)
 					return true;
 			}
 		}
@@ -242,7 +241,7 @@ class Data {
 		for (int key : records.keySet()) {
 			List<String> valuelist = records.get(key);
 			for (String string : valuelist) {
-				if (new Matcher().matching(value, string))
+				if (value==string)
 					result.add(name + " " + keyMap.get(key) + " " + string);
 			}
 		}
