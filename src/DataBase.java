@@ -17,7 +17,7 @@ public class DataBase {
 		return instance;
 	}
 
-	public DataBase() {
+	private DataBase() {
 		datas = new HashMap<>();
 		keyMap = new HashMap<>();
 	}
@@ -38,10 +38,10 @@ public class DataBase {
 		} else
 			key = keyMap.get(values[1]);
 		if (datas.containsKey(values[0])) {
-			datas.get(values[0]).add(key, values[2]);
+			datas.get(values[0]).insert(key, values[2]);
 		} else {
 			Data data = new Data(values[0]);
-			data.add(key, values[2]);
+			data.insert(key, values[2]);
 			datas.put(values[0], data);
 		}
 		return true;
@@ -84,7 +84,7 @@ public class DataBase {
 	DataBase searchByVarb(String varb) {
 		DataBase dataBase = new DataBase();
 		for (String key : keyMap.keySet()) {
-			if (varb==key)
+			if (key.equals(varb))
 				dataBase.keyMap.put(key, keyMap.get(key));
 		}
 		if (dataBase.keyMap.isEmpty())
@@ -122,9 +122,9 @@ public class DataBase {
 		}
 		if (!isVar(values[0]))
 			dataBase = dataBase.searchByName(values[0]);
-		if (!isContainVar(values[1]))
+		if (dataBase!=null&&!isContainVar(values[1]))
 			dataBase = dataBase.searchByVarb(values[1]);
-		if (!isContainVar(values[2]))
+		if (dataBase!=null&&!isContainVar(values[2]))
 			dataBase = dataBase.searchByValue(values[2]);
 		return dataBase;
 	}
@@ -143,10 +143,6 @@ public class DataBase {
 			list.addAll(d.GetAllSentence(keyMap));
 		}
 		return list;
-	}
-
-	public static void main(String[] args) {
-		getDataBase().insert("Hanako studies philosophy");
 	}
 }
 
@@ -196,7 +192,7 @@ class Data {
 		records = new HashMap<>();
 	}
 
-	public void add(int key, String value) {
+	public void insert(int key, String value) {
 		if (records.containsKey(key)) {
 			records.get(key).add(value);
 		} else {
@@ -204,18 +200,6 @@ class Data {
 			list.add(value);
 			records.put(key, list);
 		}
-	}
-
-	public List<String> Search(List<Integer> keys, List<String> keyMap) {
-		List<String> results = new ArrayList<>();
-		for (Integer key : keys) {
-			if (records.containsKey(key)) {
-				for (String string : records.get(key)) {
-					results.add(name + " " + keyMap.get(key) + " " + string);
-				}
-			}
-		}
-		return results;
 	}
 
 	public boolean Search(Collection<Integer> collection) {
@@ -229,23 +213,11 @@ class Data {
 	public boolean Search(String value) {
 		for (List<String> list : records.values()) {
 			for (String s : list) {
-				if (s==value)
+				if (s.equals(value))
 					return true;
 			}
 		}
 		return false;
-	}
-
-	public List<String> Search(String value, List<String> keyMap) {
-		List<String> result = new ArrayList<>();
-		for (int key : records.keySet()) {
-			List<String> valuelist = records.get(key);
-			for (String string : valuelist) {
-				if (value==string)
-					result.add(name + " " + keyMap.get(key) + " " + string);
-			}
-		}
-		return result;
 	}
 
 	public List<String> GetAllSentence(Map<String,Integer> keyMap) {
