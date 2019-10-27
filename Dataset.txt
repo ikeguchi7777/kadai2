@@ -1,204 +1,286 @@
 Mario is male
 Mario is a human
 Mario is a character of SUPERMARIO
+Mario is gentleman
+Mario has beard
 DonkeyKong is male
 DonkeyKong is a gorila
 DonkeyKong is a character of DONKEYKONG
+DonkeyKong is powerful
+DonkeyKong has brown hair
 Link is male
 Link is a human
 Link is a character of ZELDA
+Link is Brave
+Link wear cape
 Samus is female
 Samus is a human
 Samus is a character of METROID
+Samus is blonde
+Samus use a gun
 DarkSamus is female
 DarkSamus is a human
 DarkSamus is a character of METROID
 Yoshi is gender-unknown
 Yoshi is a dinosaur
 Yoshi is a character of YOSHI
+Yoshi lays an egg
 Kirby is gender-unknown
 Kirby is species-unknown
 Kirby is a character of KIRBY'S-DREAM-LAND
+Kirby is so cute
+Kirby is spherical
+Kirby is pink
 Fox is male
 Fox is a fox
 Fox is a character of STARFOX
+Fox use a gun
+Fox has brown hair
 Pikachu is gender-unknown
 Pikachu is a pokemon
 Pikachu is a character of POKEMON
+Pikachu can generate electricity
 Luigi is male
 Luigi is a human
 Luigi is a character of SUPERMARIO
+Luigi is gentleman
+Luigi has beard
 Ness is male
 Ness is a human
 Ness is a character of MOTHER
+Ness has a many friends
+Ness can use supernatural power
 CaptainFalcon is male
 CaptainFalcon is a human
 CaptainFalcon is a character of F-ZERO
+CaptainFalcon is thirty-seven years old
+CaptainFalcon fights with fist
 Purin is gender-unknown
 Purin is a pokemon
 Purin is a character of POKEMON
+Purin is spherical
+Purin can sing lullaby
+Purin is pink
 Peach is female
 Peach is a human
 Peach is a character of SUPERMARIO
+Peach is princess
 Daisy is female
 Daisy is a human
 Daisy is a character of SUPERMARIO
+Daisy is princess
+Daiys has brown hair
 Koopa is male
 Koopa is a Turtle
 Koopa is a character of SUPERMARIO
+Koopa is villain
 IceClimber is gender-unknown
 IceClimber is a human
 IceClimber is a character of ICECLIMBER
+IceClimber is twins
 Sheik is gender-unknown
 Sheik is a human
 Sheik is a character of ZELDA
 Zelda is female
 Zelda is a human
 Zelda is a character of ZELDA
+Zelda is princess
+Zelda can use magic
 Dr.Mario is male
 Dr.Mario is a human
 Dr.Mario is a character of SUPERMARIO
 Pichu is gender-unknown
 Pichu is a pokemon
 Pichu is a character of POKEMON
+Pichu can generate electricity
 Falco is male
 Falco is a bird
 Falco is a character of STARFOX
+Falco has blue hair
+Falco use a gun
 Marth is male
 Marth is a human
 Marth is a character of FIRE-EMBLEM
+Marth is prince
+Marth use a sword
+Marth wear cape
 Lucina is female
 Lucina is a human
 Lucina is a character of FIRE-EMBLEM
+Lucina is princess
 YoungLink is male
 YoungLink is a human
 YoungLink is a character of ZELDA
 GanonDolf is male
 GanonDolf is a human
 GanonDolf is a character of ZELDA
+GanonDolf is villain
+GanonDolf can play a pipe-organ
+GanonDolf wear cape
 Mew-Two is gender-unknown
 Mew-Two is a Pokemon
 Mew-Two is a character of POKEMON
+Mew-Two is made by man
+Mew-Two has no hair
 Roy is male
 Roy is human
 Roy is a character of FIRE-EMBLEM
+Roy is a nobleman
 Chrom is male
 Chrom is a human
 Chrom is a character of FIRE-EMBLEM
 Mr.GAME&Watch is gender-unknown
 Mr.GAME&Watch is species-unknown
 Mr.GAME&Watch is a character of GAME&WATCH
+Mr.GAME&watch is black
 MetaNight is gender-unknown
 MetaNight is species-unknown
 MetaNight is a character of KIRBY'S-DREAM-LAND
+MetaNight wear cape
 Pit is male
 Pit is an angel
 Pit is a character of KID-ICARUS
+Pit has wings
 Black-Pit is male
 Black-Pit is an angel
 Black-Pit is a character of KID-ICARUS
+Black-Pit has wings
 ZeroSuitSamus is female
 ZeroSuitSamus is a human
 ZeroSuitSamus is a character of METROID
 Wario is male
 Wario is a human
 Wario is a character of WARIO-WARE
+Wario has beard
 Snake is male
 Snake is a human
-Snake is a character of METALGEAR
+Snake is a character of METALGEAR]
+Snake has beard
+Snake use bomb
 Ike is male
 IKe is a human
 Ike is a character of FIRE-EMBLEM
+Ike wear cape
 Pokemon-Trainer is male
 Pokemon-Trainer is a human
 Pokemon-Trainer is a character of POKEMON
+Pokemon-Trainer use three Pokemon
 DiddyKong is male
 DiddyKong is a monkey
 DiddyKong is a character of DONKEYKONG
+DiddyKong has brown hair
 Lucas is male
 Lucas is a human
 Lucas is a character of MOTHER
+Lucas can use supernatural power
 Sonic is male
-Sonic is a Hedgehog
+Sonic is a hedgehog
 Sonic is a character of SONIC
+Sonic has blue hair
+Sonic can run fast
 Dedede is male
 Dedede is species-unknown
 Dedede is a character of KIRBY'S-DREAM-LAND
+Dedede is king
 Pikmin&Olimar is male
-Pikmin&Olimar is a human
+Pikmin&Olimar is species-unknown
 Pikmin&Olimar is a character of PIKMIN
+Pikmin&Olimar is married
 Lucario is gender-unknown
 Lucario is a pokemon
 Lucario is a character of POKEMON
+Lucario has blue hair
 Robot is gender-unknown
-Robot is a species-unknown
+Robot is species-unknown
 Robot is a character of FAMILY-COMPUTER-ROBOT
+Robot is an inorganic
 ToonLink is male
 ToonLink is a human
 ToonLink is a character of ZELDA
 Wolf is male
 Wolf is a Wolf
 Wolf is a character of STARFOX
+Wolf use a gun
 Murabito is gender-unknown
 Murabito is a human
 Murabito is a character of ANIMAL-CROSSING
 RockMan is gender-unknown
-RockMan is a species-unknown
+RockMan is species-unknown
 RockMan is a character of ROCKMAN
+RockMan use a gun
 WiiFitTrainer is gender-unknown
 WiiFitTrainer is a human
 WiiFitTrainer is a character of WiiFIT
+WiiFitTrainer is flexible
 Rosetta&Chiko is female
 Rosetta&Chiko is a human
 Rosetta&Chiko is a character of SUPERMARIO
+Rosetta is blonde
 LittleMac is male
 LittleMac is a human
 LittleMac is a character of PUNCH-OUT
+LittleMac fights with fist
 Gekkouga is gender-unknown
 Gekkouga is Pokemon
 Gekkouga is a character of POKEMON
+Gekkouga can breathe water
 Mii-Fighter is gender-unknown
 Mii-Fighter is a human
 Mii-Fighter is a character of Mii
+Mii-Fighter can be changed appearance
 Palutena is female
 Palutena is an angel
 Palutena is a character of KID-ICARUS
+Palutena has wings
 Pac-Man is gender-unknown
 Pac-Man is specie-unknown
 Pac-Man is a character of PAC-MAN
+Pac-Man is spherical
 Refle is male
 Refle is a human
 Refle is a character of FIRE-EMBLEM
+Refle has gray hair
 Shulk is male
 Shulk is a human
 Shulk is a character of XENOBLADE
+Shulk use a sword
 KoopaJr. is male
 KoopaJr. is a turtle
 KoopaJr. is a character of SUPERMARIO
+KoopaJr. is a Koopa's sun
 DuckHunt is male
 DuckHunt is specie-unknown
 DuckHunt is a character of DUCKHUNT
 Ryu is male
 Ryu is a human
 Ryu is a character of STREET-FIGHTER
+Ryu fights with fist
 Ken is male
 Ken is a human
 Ken is a character of STREET-FIGHTER
+Ken fights with fist
 Cloud is male
 Cloud is a human
 Cloud is a character of FINAL-FANTASY
+Cloud is blonde
 Kamui is gender-unknown
 Kamui is a human
 Kamui is a character of FIRE-EMBLEM
+Kamui has red eyes
 Beyonetta is female
 Beyonetta is a human
 Beyonetta is a character of BEYONETTA
+Beyonetta use a gun
+Beyonetta has wings
 Inkling is gender-unknown
 Inkling is a squid
 Inkling is a character of SPLATOON
+Inkling is cute
+Inkling use a gun
 Ridley is gender-unknown
 Ridley is specie-unknown
 Ridley is a character of METROID
+Ridley has wings
 Simon is male
 Simon is a human
 Simon is a character of CASTLEVANIA
@@ -206,23 +288,30 @@ Richter is male
 Richter is a human
 Richter is a character of CASTLEVANIA
 King-K-Rool is male
-King-K-Rool is Alligator
+King-K-Rool is an alligator
 King-K-Rool is a character of DONKEYKONG
+King-K-Rool wear cape
 Shizue is female
 Shizue is a dog
 Shizue is a character of ANIMALCROSSING
+Shizue has yellow hair
 Gaogaen is gender-unknown
 Gaogaen is a Pokemon
 Gaogaen is a character of POKEMON
+Gaogaen can breathe fire
 PackunFlower is gender-unknown
 PackunFlower is a plant
 PackunFlower is a character of SUPERMARIO
+PackunFlower has fang
 Joker is male
 Joker is a human
 Joker is a character of PERSONA5
+Joker use a gun
+Joker use a knife
 Hero is gender-unknown
 Hero is a human
 Hero is a character of DRAGONQUEST
+Hero use a sword
 Banjo&Kazooie is male
 Banjo&Kazooie is a bear
 Banjo&Kazooie is a bird
