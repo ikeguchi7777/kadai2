@@ -177,6 +177,7 @@ class SearchPanel extends JPanel {
 
 class RemovePanel extends JPanel {
 	TextLog log;
+	DataBase dataBase = null;
 
 	public RemovePanel() {
 		SpringLayout layout = new SpringLayout();
@@ -201,21 +202,18 @@ class RemovePanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String str = text.getText();
-				if (str.contains("?")) {
-					DataBase dataBase = DataBase.getDataBase().Search(str);
-					for (String s : dataBase.GetResult()) {
-						if (DataBase.getDataBase().remove(s))
-							log.addLog(s + "を削除しました。");
-
+				if (dataBase == null)
+					dataBase = DataBase.getDataBase();
+				(new Unifier()).search(str);
+				ArrayList<String> matchList = Unifier.getMatchList();
+				if(!matchList.isEmpty()){
+					for (String string : matchList) {
+						if(DataBase.getDataBase().remove(string))
+							log.addLog(string + "を削除しました。");
 					}
-
-				}
-				else if (DataBase.getDataBase().remove(str))
-					log.addLog(str + "を削除しました。");
-				else {
+				}else{
 					log.addLog(str + "は見つかりませんでした。");
 				}
-
 			}
 		};
 		button.addActionListener(listener);

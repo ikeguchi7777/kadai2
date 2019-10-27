@@ -52,7 +52,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -108,6 +107,9 @@ class Unify {
             if (scan.equals("exit"))
                 break;
             (new Unifier()).search(scan);
+            for (String string : Unifier.getMatchList()) {
+                System.out.println(string);
+            }
             for (String string : Unifier.getVarSets()) {
                 System.out.println(string);
             }
@@ -122,14 +124,16 @@ class Unifier {
     StringTokenizer st2;
     String buffer2[];
     HashMap<String, String> vars;
-    LinkedList<String> lines;
+    ArrayList<String> lines;
+    ArrayList<String> matched;
     private static DataBase[] results;
     private static String[] terms;
-    private static List<String> varSets;
+    private static ArrayList<String> varSets;
+    private static ArrayList<String> matchList;
 
     Unifier() {
         vars = new HashMap<String, String>();
-        lines = new LinkedList<>();
+        lines = new ArrayList<>();
     }
 
     Unifier(List<String> list) {
@@ -137,11 +141,6 @@ class Unifier {
         for (String string : list) {
             addLine(string);
         }
-    }
-
-    Unifier(List<String> list, HashMap<String, String> vars) {
-        this(list);
-        this.vars = new HashMap<String, String>(vars);
     }
 
     public static void setByTerms(String str) {
@@ -154,41 +153,79 @@ class Unifier {
         Unifier.results = results;
     }
 
-    public static ArrayList<String> getVarSets(){
-        return new ArrayList<String>(Unifier.varSets);
-    }
-    private static void cleanVarSets(){
-        Unifier.varSets = new ArrayList<String>();
+    public static ArrayList<String> getVarSets() {
+        return new ArrayList<>(Unifier.varSets);
     }
 
-    private static void addVarSets(String string){
+    public static ArrayList<String> getMatchList() {
+        return new ArrayList<>(Unifier.matchList);
+    }
+
+    private static void cleanVarSets() {
+        Unifier.varSets = new ArrayList<>();
+    }
+
+    private static void cleanMatchList() {
+        Unifier.matchList = new ArrayList<>();
+    }
+
+    private static void addVarSets(String string) {
         Unifier.varSets.add(string);
     }
 
-    public boolean search(String str) {
-        cleanVarSets();
-        setByTerms(str);
-        return search(new HashMap<>(), 0);
+    private static void addMatchList(ArrayList<String> matched) {
+        // 重複するものは加えない
+        for (String addline : matched) {
+            boolean match = false;
+            for (String string : Unifier.matchList) {
+                if (addline.equals(string)) {
+                    match = true;
+                    break;
+                }
+            }
+            if (!match)
+                Unifier.matchList.add(addline);
+        }
     }
 
-    boolean search(HashMap<String, String> vars, int layer) {
+    public boolean search(String str) {
+        // 結果の初期化
+        cleanVarSets();
+        cleanMatchList();
+        setByTerms(str);
+        return search(new HashMap<>(), new ArrayList<>(), 0);
+    }
+
+    boolean search(HashMap<String, String> vars, ArrayList<String> matched, int layer) {
+        // 再帰でバックトラック可能に
         boolean match = false;
         if (layer < terms.length) {
-            if(Unifier.results[layer]==null)
+            if (Unifier.results[layer] == null)
                 return false;
             Unifier unifier = new Unifier(Unifier.results[layer].GetResult());
             for (String string : unifier.lines) {
                 unifier.setVars(vars);
+                unifier.setMatched(matched);
                 if (unifier.unify(string, terms[layer])) {
-                    match = search(unifier.vars, layer + 1) || match;
+                    unifier.matched.add(string);
+                    match = search(unifier.vars, unifier.matched, layer + 1) || match;
                 }
             }
         } else {
+            // すべての層（パターン式）を通過すれば結果に追加
+            addMatchList(matched);
             String varset = vars.toString();
-            if(varset.equals("{}"))
+            for (String string : matched) {
+                // マッチした文を結果に追加
+                addVarSets(string);
+            }
+            if (varset.equals("{}"))
+                // 変数がなければtrue.
                 addVarSets("true.");
-            else
+            else {
                 addVarSets(varset);
+            }
+
             return true;
         }
         return match;
@@ -196,6 +233,10 @@ class Unifier {
 
     private void setVars(HashMap<String, String> vars2) {
         vars = new HashMap<>(vars2);
+    }
+
+    private void setMatched(ArrayList<String> matched) {
+        this.matched = new ArrayList<>(matched);
     }
 
     public void addLine(String s) {
@@ -213,7 +254,7 @@ class Unifier {
 
         // 同じなら成功
         if (string1.equals(string2)) {
-            //System.out.println(string1);
+            // System.out.println(string1);
             return true;
         }
 
@@ -240,8 +281,8 @@ class Unifier {
         }
 
         // 最後まで O.K. なら成功
-        //System.out.println(string1);
-        //System.out.println(vars.toString());
+        // System.out.println(string1);
+        // System.out.println(vars.toString());
         return true;
     }
 
