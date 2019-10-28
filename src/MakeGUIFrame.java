@@ -1,9 +1,12 @@
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
 public class MakeGUIFrame {
@@ -40,6 +43,9 @@ public class MakeGUIFrame {
 				case "Remove":
 					layout.show(cardPanel, cmd);
 					break;
+				case "Save":
+					Save(frame);
+					break;
 				case "Exit":
 					System.exit(0);
 					break;
@@ -62,6 +68,10 @@ public class MakeGUIFrame {
 	    JButton removeButton = new JButton("削除に移動");
 	    removeButton.addActionListener(listener);
 	    removeButton.setActionCommand("Remove");
+	    
+	    JButton saveButton = new JButton("保存");
+	    saveButton.addActionListener(listener);
+	    saveButton.setActionCommand("Save");
 
 	    JButton exitButton = new JButton("閉じる");
 	    exitButton.addActionListener(listener);
@@ -71,6 +81,7 @@ public class MakeGUIFrame {
 	    btnPanel.add(addButton);
 	    btnPanel.add(searchButton);
 	    btnPanel.add(removeButton);
+	    btnPanel.add(saveButton);
 	    btnPanel.add(exitButton);
 
 	    frame.add(cardPanel, BorderLayout.CENTER);
@@ -81,6 +92,17 @@ public class MakeGUIFrame {
 
 	public static void main(String[] args) {
 		MakeMatchingGUI();
+	}
+	
+	private static void Save(Component component) {
+		String path = System.getProperty("user.dir");
+		JFileChooser filechooser = new JFileChooser(path);
+		filechooser.setFileFilter(new TxtFilter());
+	    int selected = filechooser.showSaveDialog(component);
+	    if (selected == JFileChooser.APPROVE_OPTION){
+	      File file = filechooser.getSelectedFile();
+	      DataBase.Save(file);
+	    }
 	}
 }
 

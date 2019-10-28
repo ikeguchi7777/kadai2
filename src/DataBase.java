@@ -1,3 +1,8 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -143,6 +148,23 @@ public class DataBase {
 			list.addAll(d.GetAllSentence(keyMap));
 		}
 		return list;
+	}
+	
+	public static void Save(File file) {
+		try {
+            PrintWriter p_writer = new PrintWriter
+                    (new BufferedWriter(new OutputStreamWriter
+                    (new FileOutputStream(file),"UTF-8")));
+            for (String s : instance.GetResult()) {
+    			p_writer.println(s);
+    		}
+            
+            //ファイルをクローズする
+            p_writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		
 	}
 }
 
