@@ -1,0 +1,125 @@
+\documentclass[a4j]{jarticle}
+
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{listings,jlisting}
+\usepackage{ascmac}
+\usepackage{amsmath,amssymb}
+
+%ここからソースコードの表示に関する設定
+\lstset{
+  basicstyle={\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\smallitshape},
+  keywordstyle={\small\bfseries},
+  ndkeywordstyle={\small},
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex
+}
+%ここまでソースコードの表示に関する設定
+
+\title{知能プログラミング演習II 課題2}
+\author{グループ07\\
+  29114086 飛世裕貴\\
+%  {\small (グループレポートの場合は、グループ名および全員の学生番号と氏名が必要)}
+}
+\date{2019年10月21日}
+
+\begin{document}
+\maketitle
+
+\paragraph{提出物} rep2
+\paragraph{グループ} グループ07
+\paragraph{メンバー}
+\begin{tabular}{|c|c|c|}
+  \hline\hline
+  学籍番号&名前&貢献度\\
+  \hline\hline
+  29114007&池口弘尚&\\
+  \hline
+  29114031&大原拓人&\\
+  \hline
+  29114048&北原太一&\\
+  \hline
+  29114086&飛世裕貴&\\
+  \hline
+  29114095&野竹浩二朗&\\
+  \hline
+\end{tabular}
+
+
+
+\section{課題の説明}
+\begin{description}
+\item[課題2-1] MatchingクラスまたはUnifyクラスを用い，パターンで検索可能な簡単なデータベースを作成せよ．
+与えられたパターンにマッチする全データを列挙するプログラムを作成せよ．
+例えば，この例のような形式のデータセットから，?x has a hobby of playing video-games や Hanako is a ?y のような，様々なパターンにマッチするデータを検索できるようにすること．
+複数のパターンが与えられたときに全ての可能な変数束縛の集合を返すようなプログラムを作成せよ．
+例えば，上記の例で「?x is a boy」と「?x loves ?y」の両方が与えられたときに，(?x, ?y) の全ての可能な変数束縛の集合として{(Taro, Jiro), (Jiro, Hanako)}を返すこと．
+
+\item[課題2-2] 自分たちの興味ある分野の知識についてデータセットを作り，上記2-1で実装したデータベースに登録せよ．また，検索実行例を示せ．どのような方法でデータセットを登録しても構わない
+\item[課題2-3] 上記システムのGUIを作成せよ．
+データの追加，検索，削除をGUIで操作できるようにすること．
+登録されたデータが次回起動時に消えないよう，登録されたデータをファイルへ書き込んだり読み込んだりできるようにすること．
+\end{description}
+
+今回、私が担当した課題は課題2-2である。
+
+\section{課題2−2}
+\begin{screen}
+自分たちの興味ある分野の知識についてデータセットを作り，上記2-1で実装したデータベースに登録せよ．また，検索実行例を示せ．どのような方法でデータセットを登録しても構わない
+\end{screen}
+
+\subsection{手法}
+ここでは任天堂の『大乱闘スマッシュブラザーズ』のキャラクターに関して、性別や種族、また何のゲームのキャラクターであるかなどの情報をDataset.txtに保存し、データセットとして扱った。
+
+\subsection{実装}
+上記したデータセットのデータベースへの登録はDataset.txtを読み込み、各データを課題2-1で実装したDataBaseクラスのインスタンスとして挿入していくことで実装した。
+
+\subsection{実行例}
+データベースへ登録したデータに対して検索を行なった結果の一部を以下に示す。
+\\
+
+\begin{screen}
+\begin{verbatim}
+Enter Search Pattern:
+?x is male
+…  (中略)
+Black-Pit is male
+{?x=Black-Pit}
+Pikmin&Olimar is male
+{?x=Pikmin&Olimar}
+ToonLink is male
+{?x=ToonLink}
+DonkeyKong is male
+{?x=DonkeyKong}
+…（以下略）
+\end{verbatim}
+\end{screen}
+\\
+
+このように検索した結果、該当したデータと変数束縛の集合が表示されていることが確認できる。またここでは示していないが、「?x is ?y」や「?x has ?y」といった検索語においても検索を行なった結果、同様に該当したデータと変数束縛の集合が表示されることを確認した。
+\subsection{考察}
+今回の課題において「A is B」や「C has D」という形式のデータを扱ったが、キャラクター同士の関係性が希薄であったため、各データの関連性が小さいものとなってしまった。また今回の課題では入力したデータをただの文字列として扱っていたために「Jiro loves Hanako」のように互いの関係性を表すデータが入力されたとしても、真に登場人物間の関係性を考慮するデータ構造を実現することが出来ず、検索して初めて関係性が決定するというものとなった。
+今回のようにテキストデータを扱う場合はそのデータに対して形態素解析を行い、動詞のような各登場人物間の関係性を表す単語をキーとして保存しておくことで、関係性を考慮したデータ構造を取るリレーショナルデータベースを構築できると考える。
+
+\section{感想}
+
+\begin{thebibliography}{99}
+  \bibitem{text} 知能処理学の講義スライド、主に分枝限定法の部分
+  \bibitem{goo} 矢印を描画 -JAVAで矢印を描画したいのですが、どうしたらいいのかわか- Java | 教えて!goo
+  \url{https://oshiete.goo.ne.jp/qa/4014364.html} （2019年10月7日アクセス）.
+  \bibitem{swing} Swingを使ってみよう - Java GUIプログラミング
+  \url{https://www.javadrive.jp/tutorial/} （2019年10月7日アクセス）.
+\end{thebibliography}
+
+\end{document}
