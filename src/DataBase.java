@@ -15,7 +15,7 @@ import java.util.StringTokenizer;
 public class DataBase {
 	private static DataBase instance = new DataBase();
 	Map<String, Data> datas;
-	Map<String,Integer> keyMap;
+	Map<String, Integer> keyMap;
 	static int id = 0;
 
 	static DataBase getDataBase() {
@@ -29,7 +29,7 @@ public class DataBase {
 
 	boolean insert(String sentence) {
 		String[] values = null;
-		if(sentence.contains("?"))
+		if (sentence.contains("?"))
 			return false;
 		try {
 			values = SentenceAnalysis.Analysis(sentence);
@@ -38,12 +38,12 @@ public class DataBase {
 		}
 		int key = -1;
 		if (!keyMap.containsKey(values[1])) {
-			keyMap.put(values[1],id++);
+			keyMap.put(values[1], id++);
 			key = keyMap.size() - 1;
 		} else
 			key = keyMap.get(values[1]);
 		if (datas.containsKey(values[0])) {
-			datas.get(values[0]).insert(key, values[2]);
+			return datas.get(values[0]).insert(key, values[2]);
 		} else {
 			Data data = new Data(values[0]);
 			data.insert(key, values[2]);
@@ -77,9 +77,9 @@ public class DataBase {
 		Data d = datas.get(name);
 		if (d == null)
 			return null;
-		Set<Integer> keyset =d.records.keySet();
+		Set<Integer> keyset = d.records.keySet();
 		for (String s : keyMap.keySet()) {
-			if(keyset.contains(keyMap.get(s)))
+			if (keyset.contains(keyMap.get(s)))
 				dataBase.keyMap.put(s, keyMap.get(s));
 		}
 		dataBase.datas.put(name, d);
@@ -99,7 +99,7 @@ public class DataBase {
 				dataBase.datas.put(d.name, d);
 			}
 		}
-		if(dataBase.datas.isEmpty())
+		if (dataBase.datas.isEmpty())
 			return null;
 		return dataBase;
 	}
@@ -127,9 +127,9 @@ public class DataBase {
 		}
 		if (!isVar(values[0]))
 			dataBase = dataBase.searchByName(values[0]);
-		if (dataBase!=null&&!isContainVar(values[1]))
+		if (dataBase != null && !isContainVar(values[1]))
 			dataBase = dataBase.searchByVarb(values[1]);
-		if (dataBase!=null&&!isContainVar(values[2]))
+		if (dataBase != null && !isContainVar(values[2]))
 			dataBase = dataBase.searchByValue(values[2]);
 		return dataBase;
 	}
@@ -149,22 +149,21 @@ public class DataBase {
 		}
 		return list;
 	}
-	
+
 	public static void Save(File file) {
 		try {
-            PrintWriter p_writer = new PrintWriter
-                    (new BufferedWriter(new OutputStreamWriter
-                    (new FileOutputStream(file),"UTF-8")));
-            for (String s : instance.GetResult()) {
-    			p_writer.println(s);
-    		}
-            
-            //ファイルをクローズする
-            p_writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-		
+			PrintWriter p_writer = new PrintWriter(
+					new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")));
+			for (String s : instance.GetResult()) {
+				p_writer.println(s);
+			}
+
+			//ファイルをクローズする
+			p_writer.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 }
 
@@ -214,14 +213,19 @@ class Data {
 		records = new HashMap<>();
 	}
 
-	public void insert(int key, String value) {
+	public boolean insert(int key, String value) {
 		if (records.containsKey(key)) {
-			records.get(key).add(value);
+			List<String> list = records.get(key);
+			if (!list.contains(value))
+				list.add(value);
+			else
+				return false;
 		} else {
 			List<String> list = new ArrayList<>();
 			list.add(value);
 			records.put(key, list);
 		}
+		return true;
 	}
 
 	public boolean Search(Collection<Integer> collection) {
@@ -242,12 +246,12 @@ class Data {
 		return false;
 	}
 
-	public List<String> GetAllSentence(Map<String,Integer> keyMap) {
+	public List<String> GetAllSentence(Map<String, Integer> keyMap) {
 		List<String> list = new ArrayList<>();
 		Set<Integer> sets = records.keySet();
 		for (String s : keyMap.keySet()) {
-			Integer t =keyMap.get(s);
-			if(sets.contains(t)) {
+			Integer t = keyMap.get(s);
+			if (sets.contains(t)) {
 				for (String string : records.get(t)) {
 					list.add(name + " " + s + " " + string);
 				}
