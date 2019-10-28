@@ -1,0 +1,134 @@
+\documentclass[a4j]{jarticle}
+
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{listings,jlisting}
+\usepackage{ascmac}
+\usepackage{amsmath,amssymb}
+
+%ここからソースコードの表示に関する設定
+\lstset{
+  basicstyle={\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\smallitshape},
+  keywordstyle={\small\bfseries},
+  ndkeywordstyle={\small},
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex
+}
+%ここまでソースコードの表示に関する設定
+
+\title{知能プログラミング演習II 課題2}
+\author{グループ07\\
+  29114095 野竹浩二朗\\
+%  {\small (グループレポートの場合は、グループ名および全員の学生番号と氏名が必要)}
+}
+\date{2019年10月21日}
+
+\begin{document}
+\maketitle
+
+\paragraph{提出物} rep1
+\paragraph{グループ} グループ07
+\paragraph{メンバー}
+\begin{tabular}{|c|c|c|}
+  \hline\hline
+  29114007&池口弘尚&20\\
+  \hline
+  29114031&大原拓人&20\\
+  \hline
+  29114048&北原太一&20\\
+  \hline
+  29114086&飛世裕貴&20\\
+  \hline
+  29114095&野竹浩二朗&20\\
+\end{tabular}
+
+
+
+\section{課題の説明}
+\begin{description}
+\item[課題2-1] MatchingクラスまたはUnifyクラスを用い，パターンで検索可能な簡単なデータベースを作成せよ．
+与えられたパターンにマッチする全データを列挙するプログラムを作成せよ．
+例えば，この例のような形式のデータセットから，?x has a hobby of playing video-games や Hanako is a ?y のような，様々なパターンにマッチするデータを検索できるようにすること．\\
+複数のパターンが与えられたときに全ての可能な変数束縛の集合を返すようなプログラムを作成せよ．
+例えば，上記の例で「?x is a boy」と「?x loves ?y」の両方が与えられたときに，(?x, ?y) の全ての可能な変数束縛の集合として{(Taro, Jiro), (Jiro, Hanako)}を返すこと．
+	
+\item[課題2-2] 自分たちの興味ある分野の知識についてデータセットを作り，上記2-1で実装したデータベースに登録せよ．また，検索実行例を示せ．どのような方法でデータセットを登録しても構わない．
+
+\item[課題2-3] 上記システムのGUIを作成せよ．\\
+データの追加，検索，削除をGUIで操作できるようにすること．\\
+登録されたデータが次回起動時に消えないよう，登録されたデータをファイルへ書き込んだり読み込んだりできるようにすること．
+\end{description}
+私は課題2-2を担当した。
+
+\section{課題2-2}
+\begin{screen}
+自分たちの興味ある分野の知識についてデータセットを作り，上記2-1で実装したデータベースに登録せよ．また，検索実行例を示せ．どのような方法でデータセットを登録しても構わない．
+\end{screen}
+この課題は実装を伴わないため、実行例、考察のみを記す。
+\subsection{手法}
+用意したデータセット"Dataset.txt"は「大乱闘スマッシュブラザーズスペシャル」に登場するキャラクター79体のデータである。性別や種族、元のゲームのデータなどが記されている。
+\subsection{実行例}
+実行結果のすべてを載せてしまうと長くなってしまうため、自分が与えたパターンと検索に引っかかったキャラクターのみを何パターンか記す。
+\\
+\begin{table}[ht]
+\begin{tabular}{|c|l|}
+\hline
+\multicolumn{1}{|l|}{与えたパターン} & \multicolumn{1}{c|}{検索結果} \\ \hline
+?x is female & \begin{tabular}[c]{@{}l@{}}ロゼッタ\&チコ・サムス・パルテナ・ベヨネッタ・ピーチ・ゼロスーツサムス\\ デイジー・しずえ・ダークサムス・ルキナ・ゼルダ\end{tabular} \\ \hline
+?x use a gun & サムス・ベヨネッタ・ゼロスーツサムス・ダークサムス \\ \hline
+?x has wings & ベヨネッタ \\ \hline
+\end{tabular}
+\end{table}
+\\
+1つ目のパターンで女性キャラクター、2つ目で銃を使うキャラクター、3つ目で羽が生えているキャラクターを検索している。この条件に合うキャラクターはベヨネッタだけなのでしっかりと検索出来ている。\\
+
+\begin{table}[ht]
+\begin{tabular}{|c|l|}
+\hline
+\multicolumn{1}{|l|}{与えたパターン} & \multicolumn{1}{c|}{検索結果} \\ \hline
+?x is gender-unknown & \begin{tabular}[c]{@{}l@{}}ヨッシー・ミュウツー・カムイ・WiiFitTrainer・ゲッコウガ・プリン\\ インクリング・ピチュー・ルカリオ・シーク・Mii-Fighter・ピカチュー\\ パックンフラワー・アイスクライマー・メタナイト・ガオガエン\\ Mr.Game\&Watch・リドリー・ヒーロー・ロックマン・むらびと\\ カービィ・ロボット・パックマン\end{tabular} \\ \hline
+\begin{tabular}[c]{@{}c@{}}?x is a character of \\ KIRBY'S-DREAM-LAND\end{tabular} & カービィ・メタナイト \\ \hline
+?x is pink & カービィ \\ \hline
+\end{tabular}
+\end{table}
+1つ目の要素では"性別不明"を検索しているが、設定として性別が分からないキャラだけでなく、ポケモンなど両方があり得る場合や、アイスクライマーなど2人で一つのキャラクターとなっている場合も検索対象となっている。
+
+\begin{table}[ht]
+\begin{tabular}{|c|l|}
+\hline
+\multicolumn{1}{|l|}{与えたパターン} & \multicolumn{1}{c|}{検索結果} \\ \hline
+?x is male & 男性キャラ多数のため省略 \\ \hline
+?x has ?y & \begin{tabular}[c]{@{}l@{}}ブラックピット・スネーク・ルイージ・ドンキーコング・ソニック・マリオ\\ フォックス・ネス・ファルコ・ディディーコング・ワリオ・ピット・ルフレ\end{tabular} \\ \hline
+?x is an angel & ピット・ブラックピット \\ \hline
+\end{tabular}
+\end{table}
+1つ目のパターンで男性キャラクターを検索しているが、多数ヒットするため省略した。2つ目では何かを持っているキャラクターを検索したが、単に道具だけでなく、翼などの身体的特徴も"has"を用いて表現したため、ここでも多数のキャラクターがヒットしている。
+\subsection{考察}
+3通りの検索結果を載せたが、3パターンとも思ったように検索できていることが分かった。\\
+データセットの書き方がすべてのキャラクターで"X is Y"という書き方を含んでいるため、"?x is ?y"というパターンを与えても何の意味もない。また使っている動詞もワンパターンとなってしまっているので、キャラクターを絞るには具体的なキャラクター名や、ゲーム名が必要である。\\
+様々なゲームのキャラクター同士を戦わせるというゲームである都合上、キャラクター同士の関係性がほぼなく、データセットの例にあった"?x loves ?y"といったパターンで検索することが難しかった。\\
+79体という少なくないキャラクターの中から特定のパターンを検索する場合、もっと多くの特徴や、他キャラクターとの関係が記述されたデータセットを用意しなければならない。
+
+\section{感想}
+
+% 参考文献
+%\begin{thebibliography}{99}
+%\bibitem{kijima2012} 来嶋大二: ひまわりの螺旋, 数学のかんどころシリーズ 8, 共立出版, 2012.
+%\bibitem{notty} ひまわりに隠されたフィボナッチ数列と黄金比---ひまわりは黄金の花？, 数学の面白いこ%と・役に立つことをまとめたサイト, \url{https://analytics-notty.tech/fibonacci-and-goldenratio-in-sunflower/} （2019年10月4日アクセス）.
+
+%\bibitem{hanako} 工大花子さんのレポート。また、・・・を教えてもらった 
+
+%\end{thebibliography}
+
+\end{document}
