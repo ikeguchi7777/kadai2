@@ -8,28 +8,28 @@
 
 %ここからソースコードの表示に関する設定
 \lstset{
-  basicstyle={\ttfamily},
-  identifierstyle={\small},
-  commentstyle={\smallitshape},
-  keywordstyle={\small\bfseries},
-  ndkeywordstyle={\small},
-  stringstyle={\small\ttfamily},
-  frame={tb},
-  breaklines=true,
-  columns=[l]{fullflexible},
-  numbers=left,
-  xrightmargin=0zw,
-  xleftmargin=3zw,
-  numberstyle={\scriptsize},
-  stepnumber=1,
-  numbersep=1zw,
-  lineskip=-0.5ex
+    basicstyle={\ttfamily},
+    identifierstyle={\small},
+    commentstyle={\smallitshape},
+    keywordstyle={\small\bfseries},
+    ndkeywordstyle={\small},
+    stringstyle={\small\ttfamily},
+    frame={tb},
+    breaklines=true,
+    columns=[l]{fullflexible},
+    numbers=left,
+    xrightmargin=0zw,
+    xleftmargin=3zw,
+    numberstyle={\scriptsize},
+    stepnumber=1,
+    numbersep=1zw,
+    lineskip=-0.5ex
 }
 %ここまでソースコードの表示に関する設定 
 
 \title{知能プログラミング演習II 課題2}
 \author{グループ07\\
-  29114031 大原 拓人\\
+    29114031 大原 拓人\\
 %  {\small (グループレポートの場合は、グループ名および全員の学生番号と氏名が必要)}
 }
 \date{2019年10月28日}
@@ -41,19 +41,19 @@
 \paragraph{グループ} グループ07
 \paragraph{メンバー}
 \begin{tabular}{|c|c|c|}
-  \hline
-  学生番号&氏名&貢献度比率\\
-  \hline\hline
-  29114007&池口弘尚&100\\
-  \hline
-  29114031&大原拓人&100\\
-  \hline
-  29114048&北原太一&100\\
-  \hline
-  29114086&飛世裕貴&100\\
-  \hline
-  29114095&野竹浩二朗&100\\
-  \hline
+    \hline
+    学生番号&氏名&貢献度比率\\
+    \hline\hline
+    29114007&池口弘尚&100\\
+    \hline
+    29114031&大原拓人&100\\
+    \hline
+    29114048&北原太一&100\\
+    \hline
+    29114086&飛世裕貴&100\\
+    \hline
+    29114095&野竹浩二朗&100\\
+    \hline
 \end{tabular}
 
 \section{課題の説明}
@@ -85,34 +85,200 @@
 \end{screen}
 \subsection{手法}
     配列にデータベース用の文字列を格納し、for文を用いて配列の中を走査するようにした。
+    統合開発環境を用いているため、コマンドライン引数の変更の手間が省けるように、
+    入力ストリームから検索するパターンを読み込むように変更した。
+    検索の効率をよくするためにDataBaseクラスのSearchメソッドで絞り込みを行ってから、走査するようにした。
+    複数のパターンを読み込めるようにし、変数束縛の集合と一致したパターンの数を引数で渡しつつ、
+    再帰アルゴリズムを用いて検索するsearchメソッドを作成した。
 
 \subsection{実装}
+    もともと与えられたUnify.javaを以下のように変更した。
+    \paragraph{}
+    まず、コマンドライン引数で使用するデータセットを読み込む。
+    読み込みが完了したら、検索するパターンを入力するように促して
+    入力ストリームからパターンを読み取る。読み取ったパターンは、
+    Unifierインスタンスを作成し、そのsearchメソッドの引数として渡す。
 
-もともと与えられたSearch.javaを以下のように変更した。
-
-\begin{lstlisting}[caption=クラスより抜粋]
+\begin{lstlisting}[caption=Unifyクラスより抜粋]
+public static void main(String arg[]) {
+// For CUI Test
+Scanner stdin = new Scanner(System.in);
+    for (int i = 0; i < arg.length; i++) {
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(arg[i]), "UTF-8"));
+            String s = reader.readLine();
+            while (s != null) {
+                if (!s.equals(""))
+                    DataBase.getDataBase().insert(s);
+                s = reader.readLine();
+            }
+            reader.close();
+        } catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    while (true) {
+        System.out.println("Enter Search Pattern:");
+        String scan = stdin.nextLine();
+        if (scan.equals("exit"))
+            break;
+        (new Unifier()).search(scan);
+        for (String string : Unifier.getMatchList())
+            System.out.println(string);
+        for (String string : Unifier.getVarSets())
+            System.out.println(string);
+    }
+    stdin.close();
+}
 \end{lstlisting}
+    \paragraph{}
+    絞り込みで得られたデータを使い回すためにstatic変数としている。
+    また、マッチングに成功したときのデータと変数束縛の集合も
+    探索後に消えてしまわないように、static型に格納して後から
+    アクセスできるようにした。マッチングを始める前に、
+    これらのstatic変数は初期化される。
+\begin{lstlisting}[caption=Unifierクラスの主要パーツ]
+class Unifier {
+    private static DataBase[] results;
+    private static String[] terms;
+    private static ArrayList<String> varSets;
+    private static ArrayList<String> matchList;
+    ...
+    //ここでそのほかの変数、コンストラクタ、セッタ、ゲッタなどを定義
+    ...
 
-\begin{lstlisting}[caption=結果を保存し、比較]
+    public static void setByTerms(String str) {
+        // 検索するパターンをもとにDataBaseクラスのSearchメソッドで絞り込み格納
+        String[] terms = str.split(";");
+        Unifier.terms = terms;
+        DataBase[] results = new DataBase[terms.length];
+        for (int i = 0; i < results.length; i++) {
+            results[i] = DataBase.getDataBase().Search(terms[i]);
+        }
+        Unifier.results = results;
+    }
+
+    private static void addMatchList(ArrayList<String> matched) {
+        // 重複するものは加えない
+        for (String addline : matched) {
+            boolean match = false;
+            for (String string : Unifier.matchList) {
+                if (addline.equals(string)) {
+                    match = true;
+                    break;
+                }
+            }
+            if (!match)
+                Unifier.matchList.add(addline);
+        }
+    }
+
+    public boolean search(String str) {
+        // 結果の初期化
+        cleanVarSets();
+        cleanMatchList();
+        setByTerms(str);
+        return search(new HashMap<>(), new ArrayList<>(), 0);
+    }
+    ...
+\end{lstlisting}
+    \paragraph{}
+    それまでに得られた変数束縛の組と、マッチしたパターンの組、何個目の式の
+    マッチングかを表す整数を引数として、再帰アルゴリズムを用いて実装した。
+    一つでもマッチする組み合わせがあれば、trueを返す。
+\begin{lstlisting}[caption=searchメソッド]
+...
+boolean search(HashMap<String, String> vars, ArrayList<String> matched, int layer) {
+    // 再帰でバックトラック可能に
+    boolean match = false;
+    if (layer < terms.length) {
+        if (Unifier.results[layer] == null)
+            return false;
+        Unifier unifier = new Unifier(Unifier.results[layer].GetResult());
+        for (String string : unifier.lines) {
+            unifier.setVars(vars);
+            unifier.setMatched(matched);
+            if (unifier.unify(string, terms[layer])) {
+                unifier.matched.add(string);
+                match = search(unifier.vars, unifier.matched, layer + 1) || match;
+            }
+        }
+    } else {
+        // すべての層（パターン式）を通過すれば結果に追加
+        addMatchList(matched);
+        String varset = vars.toString();
+        for (String string : matched)
+            // マッチした文を結果に追加
+            addVarSets(string);
+        if (varset.equals("{}"))
+            // 変数がなければtrue.
+            addVarSets("true.");
+        else
+            addVarSets(varset);
+        return true;
+    }
+    return match;
+}
+...
 \end{lstlisting}
 
 \subsection{実行例}
+ここではmoodleで与えられたデータセットの例を用いた。
+\begin{lstlisting}[caption=Unify.javaの実行例]]
+Enter Search Pattern:
+Taro is a boy
+Taro is a boy
+true.
+Enter Search Pattern:
+?x is a boy  
+Taro is a boy
+{?x=Taro}
+Jiro is a boy
+{?x=Jiro}
+Enter Search Pattern:
+?x loves ?y;?y loves ?z;?z loves ?x
+Hanako loves Taro
+Taro loves Jiro
+Jiro loves Hanako
+{?x=Hanako, ?y=Taro, ?z=Jiro}
+Taro loves Jiro
+Jiro loves Hanako
+Hanako loves Taro
+{?x=Taro, ?y=Jiro, ?z=Hanako}
+Jiro loves Hanako
+Hanako loves Taro
+Taro loves Jiro
+{?x=Jiro, ?y=Hanako, ?z=Taro}
+Enter Search Pattern:
+exit
+\end{lstlisting}
+    \paragraph{}
+    変数がなければ、「true.」が表示される。
+    複数のパターンをセミコロン「;」で区切って入力することでそれらの検索ができ、
+    一致したパターンとその時の変数束縛の集合が表示されている。
 
 \subsection{考察}
+もともと入力されたパターンごとにデータセットを全走査する予定だったが、
+グループの池口君が絞り込みにかなり有効なDataBaseクラスを作ってくれたので、
+探索の効率がかなり向上した。変数束縛の組を共有せず、インスタンスごとに
+複製して引き継ぐことで、バックトラックらしい挙動を再現できた。
 
 \section{課題2-2}
 \begin{screen}
     自分たちの興味ある分野の知識についてデータセットを作り，上記2-1で実装したデータベースに登録せよ．
     また，検索実行例を示せ．どのような方法でデータセットを登録しても構わない．
 \end{screen}
-
 \subsection{手法}
 
-\subsection{実装}
-
-\subsection{実行例}
-
 \subsection{考察}
+この課題はグループのほかの人に託したので、グループレポートを参照されたい。
 
 \section{課題2-3}
 \begin{screen}
@@ -123,21 +289,26 @@
 \subsection{手法}
 
 \subsection{実装}
-
-\subsection{実行例}
+私は、UnifierクラスからGUI用に出力できるように、
+リストに結果を格納するように調整した。
 
 \subsection{考察}
+削除するためにマッチしたパターンを重複なく格納するリストが必要になったので、
+課題2-1で示したマッチしたパターンをパターン発見時に保存する機能は、GUI用に後から実装した。
 
 \section{感想}
-\subsection{}
+時間が足りなくて、構造化したパターンを解析するプログラムまではできなかった。
+はじめは複数パターンの照合を多重のforループで書こうとしていたが、ループの層の数がパターンの
+数によって変わるので、再帰アルゴリズムが必要だと思い付いた。
+再帰アルゴリズムのためには、メソッドのコールごとに変数を保持して、
+そのコピーを引数で渡していくのだが、当初はデータベースの絞り込んだ結果の
+配列のポインタも引数として渡そうとしていたので、読みづらいコードに
+なっていたが、クラスのstatic変数を用いることで引数に含めなくてもよくなった。
+あらためて、クラスの使い方を確認できた。
 
 % 参考文献
 \begin{thebibliography}{99}
-  \bibitem{text} 知能処理学の講義スライド、主に分枝限定法の部分
-  \bibitem{goo} 矢印を描画 -JAVAで矢印を描画したいのですが、どうしたらいいのかわか- Java | 教えて!goo
-  \url{https://oshiete.goo.ne.jp/qa/4014364.html} （2019年10月7日アクセス）.
-  \bibitem{swing} Swingを使ってみよう - Java GUIプログラミング
-  \url{https://www.javadrive.jp/tutorial/} （2019年10月7日アクセス）.
+    \bibitem{pl} prologのプログラムや挙動を参考にした
 \end{thebibliography}
 
 \end{document}

@@ -60,32 +60,16 @@ class Unify {
     static DataBase[] results;
     static String[] terms;
 
-    public Unify(String next) {
-        terms = next.split(";");
-        results = new DataBase[terms.length];
-        for (int i = 0; i < terms.length; i++) {
-            results[i] = DataBase.getDataBase().Search(terms[i]);
-        }
-    }
-
     public static void main(String arg[]) {
         // For CUI Test
-        /*
-         * if (arg.length != 2) {
-         * System.out.println("Usgae : % Unify [string1] [string2]"); } else {
-         * System.out.println((new Unifier()).unify(arg[0], arg[1])); }
-         */
-        // Unifier searcher = new Unifier();
         Scanner stdin = new Scanner(System.in);
         for (int i = 0; i < arg.length; i++) {
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(arg[i]), "UTF-8"));
                 String s = reader.readLine();
                 while (s != null) {
-                    if (!s.equals("")) {
-                        // searcher.addLine(s);
+                    if (!s.equals(""))
                         DataBase.getDataBase().insert(s);
-                    }
                     s = reader.readLine();
                 }
                 reader.close();
@@ -107,12 +91,10 @@ class Unify {
             if (scan.equals("exit"))
                 break;
             (new Unifier()).search(scan);
-            for (String string : Unifier.getMatchList()) {
+            // for (String string : Unifier.getMatchList())
+            // System.out.println(string);
+            for (String string : Unifier.getVarSets())
                 System.out.println(string);
-            }
-            for (String string : Unifier.getVarSets()) {
-                System.out.println(string);
-            }
         }
         stdin.close();
     }
@@ -138,12 +120,11 @@ class Unifier {
 
     Unifier(List<String> list) {
         this();
-        for (String string : list) {
-            addLine(string);
-        }
+        lines.addAll(list);
     }
 
     public static void setByTerms(String str) {
+        // 検索するパターンをもとにDataBaseクラスのSearchメソッドで絞り込み格納
         String[] terms = str.split(";");
         Unifier.terms = terms;
         DataBase[] results = new DataBase[terms.length];
@@ -215,17 +196,14 @@ class Unifier {
             // すべての層（パターン式）を通過すれば結果に追加
             addMatchList(matched);
             String varset = vars.toString();
-            for (String string : matched) {
+            for (String string : matched)
                 // マッチした文を結果に追加
                 addVarSets(string);
-            }
             if (varset.equals("{}"))
                 // 変数がなければtrue.
                 addVarSets("true.");
-            else {
+            else
                 addVarSets(varset);
-            }
-
             return true;
         }
         return match;
@@ -237,10 +215,6 @@ class Unifier {
 
     private void setMatched(ArrayList<String> matched) {
         this.matched = new ArrayList<>(matched);
-    }
-
-    public void addLine(String s) {
-        lines.add(s);
     }
 
     public boolean unify(String string1, String string2, HashMap<String, String> bindings) {
