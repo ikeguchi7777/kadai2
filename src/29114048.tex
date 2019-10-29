@@ -1,0 +1,103 @@
+\documentclass{jarticle}
+
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{listings,jlisting}
+\usepackage{ascmac}
+\usepackage{amsmath,amssymb}
+
+%ここからソースコードの表示に関する設定
+\lstset{
+  basicstyle={\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\smallitshape},
+  keywordstyle={\small\bfseries},
+  ndkeywordstyle={\small},
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex
+}
+%ここまでソースコードの表示に関する設定
+
+\title{知能プログラミング演習II 課題1}
+\author{グループ7\\
+  29114048 北原 太一\\
+%  {\small (グループレポートの場合は、グループ名および全員の学生番号と氏名が必要)}
+}
+\date{2019年10月29日}
+
+\begin{document}
+\maketitle
+
+\paragraph{提出物} rep2
+\paragraph{グループ} グループ7
+\paragraph{メンバー}
+\begin{tabular}{|c|c|c|}
+  \hline
+  学生番号&氏名&貢献度比率\\
+  \hline\hline
+  29114007&池口弘尚&100\\
+  \hline
+  29114031&大原拓人&100\\
+  \hline
+  29114048&北原太一&100\\
+  \hline
+  29114086&飛世裕貴&100\\
+  \hline
+  29114095&野竹浩二朗&100\\
+  \hline
+\end{tabular}
+
+\section{課題の説明}
+\begin{description}
+\item[課題2-1] MatchingクラスまたはUnifyクラスを用い，パターンで検索可能な簡単なデータベースを作成せよ．
+\item[課題2-2] 自分たちの興味ある分野の知識についてデータセットを作り，上記2-1で実装したデータベースに登録せよ．また，検索実行例を示せ．どのような方法でデータセットを登録しても構わない．
+\item[課題2-3] 上記システムのGUIを作成せよ．
+\end{description}
+
+
+\section{課題2-2}
+\begin{screen}
+  自分たちの興味ある分野の知識についてデータセットを作り，上記2-1で実装したデータベースに登録せよ．また，検索実行例を示せ．どのような方法でデータセットを登録しても構わない．
+\end{screen}
+
+私の担当箇所は、データセットの作成である。
+
+\subsection{実装}
+データセットは、3名で作成したが、監視の有無や使う単語などの統一を図った。具体的な内容については、Dataset.txtを参照されたい。
+
+\subsection{考察}
+今回は1人が作成したcsvライクなファイルからデータセットを手動で生成したが、何かしらのプログラムにより自動化すれば効率的に文を生成でき、残りの課題の高クォリティ化に繋がったかもしれない。
+
+
+\section{課題2-3}
+\begin{screen}
+  上記システムのGUIを作成せよ．
+\end{screen}
+
+私の担当箇所は、デバッグ及び考察である。したがって、実行例及び考察のみを記す。
+
+\subsection{実行例}
+
+Moodleのデータセットサンプルの、上から4行を登録し、そのまま保存した。その際に保存されたファイルの中身を以下に記す。
+
+\begin{lstlisting}
+student is a kind of human
+Hanako is a girl
+Hanako is a student
+human is a kind of mammal
+\end{lstlisting}
+
+\subsection{考察}
+  登録した内容が、過不足なく登録されている。このファイルから登録すれば、以前に登録した内容をそのまま引き継げるため、データベースの内容を保存することができていると言える。
+
+
+\end{document}
